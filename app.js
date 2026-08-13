@@ -822,14 +822,6 @@ function registerSW() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
-  // Prompt to install to home screen (Android / desktop)
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    window.__deferredPrompt = e;
-    setTimeout(() => {
-      toast('Install 75 Hard on your home screen for the full native feel.');
-    }, 3000);
-  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
