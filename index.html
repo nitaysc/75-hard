@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/png" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
   <title>75 HARD</title>
 </head>
 <body>
@@ -159,6 +159,7 @@
 
         <div class="set-group danger">
           <div class="set-label">Danger zone</div>
+          <button class="btn btn-danger" id="btn-clear-cache">Clear cache &amp; update</button>
           <button class="btn btn-danger" id="btn-reset">Reset to Day 1</button>
           <button class="btn btn-danger" id="btn-wipe">Delete all data</button>
         </div>
@@ -167,6 +168,7 @@
           <div class="brand-badge">75 HARD</div>
           <p>Inspired by Andy Frisella's 75 Hard challenge. Build discipline. Earn your day.</p>
           <p class="about-meta">Day ends: <span id="about-day-end">1:00 AM</span></p>
+          <p class="about-meta">App version: <span id="about-version">&mdash;</span></p>
         </div>
         <div class="bottom-space"></div>
       </section>
@@ -289,6 +291,6 @@
   <!-- Toast -->
   <div id="toast" class="toast hidden"></div>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>

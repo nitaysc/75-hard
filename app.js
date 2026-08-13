@@ -6,6 +6,7 @@
 
 /* ---------------- Constants ---------------- */
 const STORAGE_KEY = 'seventyfivehard.v1';
+const APP_VERSION = '10';
 const DAYS_TOTAL = 75;
 const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
@@ -301,6 +302,7 @@ function renderSettings() {
   document.getElementById('set-day-end').value = String(state.dayEndsHour);
   document.getElementById('about-day-end').textContent =
     `${formatHour(state.dayEndsHour)} ${state.dayEndsHour >= 12 ? 'PM' : 'AM'}`;
+  document.getElementById('about-version').textContent = APP_VERSION;
   document.getElementById('switch-notif').checked = state.notifAllowed;
   document.getElementById('switch-motivation').checked = state.motivation !== false;
 
@@ -845,6 +847,19 @@ function init() {
   });
 
   // --- Danger zone ---
+  document.getElementById('btn-clear-cache').addEventListener('click', async () => {
+    toast('Clearing cache...');
+    if ('serviceWorker' in navigator) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+    }
+    if (window.caches) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+    }
+    window.location.reload();
+  });
+
   document.getElementById('btn-reset').addEventListener('click', () => {
     document.getElementById('confirm-title').textContent = 'Reset to Day 1?';
     document.getElementById('confirm-text').textContent =
@@ -910,6 +925,15 @@ function init() {
 function registerSW() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
+    // When an updated service worker takes control, reload once so users
+    // always get the newest version without clearing anything manually.
+    let updated = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (updated) return;
+      updated = true;
+      toast('Updated \u2014 refreshing...');
+      setTimeout(() => window.location.reload(), 400);
+    });
   }
 }
 
