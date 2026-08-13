@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 140" width="220" height="140">
-  <!-- Shield: white fill, thick dark outline, gray inner border (wide, balanced proportions) -->
-  <path d="M110 6 L196 30 V66 C196 96 162 110 110 118 C58 110 24 96 24 66 V30 Z"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 148" width="200" height="148">
+  <!-- Shield: classic narrow/tall proportions -->
+  <path d="M100 6 L188 32 V74 C188 108 154 124 100 134 C46 124 12 108 12 74 V32 Z"
         fill="#ffffff" stroke="#0a0a0a" stroke-width="7" stroke-linejoin="round"/>
-  <path d="M110 20 L182 39 V65 C182 91 152 102 110 109 C68 102 38 91 38 65 V39 Z"
+  <path d="M100 20 L174 41 V72 C174 99 145 112 100 120 C55 112 26 99 26 72 V41 Z"
         fill="none" stroke="#3f3f46" stroke-width="3" stroke-linejoin="round"/>
   <!-- 75 -->
-  <text x="110" y="86" text-anchor="middle"
+  <text x="100" y="94" text-anchor="middle"
         font-family="'Arial Black','Arial',sans-serif" font-size="64" font-weight="900" fill="#000000">75</text>
   <!-- HARD -->
-  <text x="110" y="130" text-anchor="middle"
-        font-family="'Arial Black','Arial',sans-serif" font-size="38" font-weight="900"
-        letter-spacing="6" fill="#dc2626">HARD</text>
+  <text x="100" y="140" text-anchor="middle"
+        font-family="'Arial Black','Arial',sans-serif" font-size="32" font-weight="900"
+        letter-spacing="5" fill="#dc2626">HARD</text>
 </svg>
