@@ -6,7 +6,7 @@
 
 /* ---------------- Constants ---------------- */
 const STORAGE_KEY = 'seventyfivehard.v1';
-const APP_VERSION = '10';
+const APP_VERSION = '12';
 const DAYS_TOTAL = 75;
 const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
@@ -149,6 +149,35 @@ const I18N = {
     notifTestTitle: '75 HARD',
     notifTestBody: 'Notifications are working. Stay hard.',
     dayWord: 'DAY',
+    accountLabel: 'Account & cloud sync',
+    cloudSetupHint: 'Back up your progress to a free Firebase database and use it on any device.',
+    setupCloud: 'Set up cloud sync',
+    setupTitle: 'Connect Firebase',
+    setupHint: 'Paste your Firebase web-app config (Firebase console \u2192 Project settings \u2192 Your apps \u2192 SDK setup and configuration).',
+    configPlaceholder: '{\n  "apiKey": "...",\n  "authDomain": "...",\n  "projectId": "..."\n}',
+    connect: 'Connect',
+    invalidConfig: 'That does not look like a Firebase config. Copy the whole firebaseConfig object.',
+    email: 'Email',
+    password: 'Password',
+    signIn: 'Sign in',
+    signUp: 'Create account',
+    signOut: 'Sign out',
+    signedInAs: 'Signed in as {email}',
+    syncStatus: 'Cloud sync: {status}',
+    syncOn: 'on',
+    syncOff: 'off',
+    syncSyncing: 'syncing\u2026',
+    syncOffline: 'offline',
+    toastSignedIn: 'Signed in. Progress synced.',
+    toastSignedOut: 'Signed out.',
+    toastSynced: 'Progress restored from cloud.',
+    toastConfigSaved: 'Firebase connected.',
+    errInvalidEmail: 'That email address looks invalid.',
+    errWrongPassword: 'Wrong password. Try again.',
+    errEmailInUse: 'An account with this email already exists. Sign in instead.',
+    errWeakPassword: 'Password should be at least 6 characters.',
+    errNetwork: 'Network error. Check your connection.',
+    errGeneric: 'Something went wrong. Try again.',
   },
   he: {
     welcomeTitle: 'אתגר החוסן המנטלי<br />של 75 יום.',
@@ -285,6 +314,35 @@ const I18N = {
     notifTestTitle: '75 HARD',
     notifTestBody: 'ההתראות עובדות. תישאר חזק.',
     dayWord: 'יום',
+    accountLabel: 'חשבון וסנכרון ענן',
+    cloudSetupHint: 'גבה את ההתקדמות שלך למסד נתונים חינמי של Firebase והשתמש בה בכל מכשיר.',
+    setupCloud: 'הגדר סנכרון ענן',
+    setupTitle: 'חיבור ל־Firebase',
+    setupHint: 'הדבק כאן את הגדרות אפליקציית האינטרנט של Firebase (קונסולת Firebase \u2192 הגדרות פרויקט \u2192 האפליקציות שלך \u2192 הגדרות SDK).',
+    configPlaceholder: '{\n  "apiKey": "...",\n  "authDomain": "...",\n  "projectId": "..."\n}',
+    connect: 'חבר',
+    invalidConfig: 'זה לא נראה כמו הגדרות Firebase. העתק את כל אובייקט firebaseConfig.',
+    email: 'אימייל',
+    password: 'סיסמה',
+    signIn: 'התחבר',
+    signUp: 'צור חשבון',
+    signOut: 'התנתק',
+    signedInAs: 'מחובר כ־{email}',
+    syncStatus: 'סנכרון ענן: {status}',
+    syncOn: 'פעיל',
+    syncOff: 'כבוי',
+    syncSyncing: 'מסנכרן\u2026',
+    syncOffline: 'אין חיבור',
+    toastSignedIn: 'התחברת. ההתקדמות מסונכרנת.',
+    toastSignedOut: 'התנתקת.',
+    toastSynced: 'ההתקדמות שוחזרה מהענן.',
+    toastConfigSaved: 'Firebase מחובר.',
+    errInvalidEmail: 'כתובת האימייל לא תקינה.',
+    errWrongPassword: 'סיסמה שגויה. נסה שוב.',
+    errEmailInUse: 'כבר קיים חשבון עם האימייל הזה. התחבר במקום.',
+    errWeakPassword: 'הסיסמה צריכה לכלול לפחות 6 תווים.',
+    errNetwork: 'שגיאת רשת. בדוק את החיבור.',
+    errGeneric: 'משהו השתבש. נסה שוב.',
   },
   ru: {
     welcomeTitle: 'Испытание психологической стойкости<br />на 75 дней.',
@@ -421,6 +479,35 @@ const I18N = {
     notifTestTitle: '75 HARD',
     notifTestBody: 'Уведомления работают. Держись.',
     dayWord: 'ДЕНЬ',
+    accountLabel: 'Аккаунт и облачная синхронизация',
+    cloudSetupHint: 'Резервное копирование прогресса в бесплатную базу Firebase и доступ с любого устройства.',
+    setupCloud: 'Настроить облачную синхронизацию',
+    setupTitle: 'Подключить Firebase',
+    setupHint: 'Вставьте конфигурацию веб-приложения Firebase (консоль Firebase \u2192 Настройки проекта \u2192 Ваши приложения \u2192 Конфигурация SDK).',
+    configPlaceholder: '{\n  "apiKey": "...",\n  "authDomain": "...",\n  "projectId": "..."\n}',
+    connect: 'Подключить',
+    invalidConfig: 'Это не похоже на конфигурацию Firebase. Скопируйте весь объект firebaseConfig.',
+    email: 'Эл. почта',
+    password: 'Пароль',
+    signIn: 'Войти',
+    signUp: 'Создать аккаунт',
+    signOut: 'Выйти',
+    signedInAs: 'Вы вошли как {email}',
+    syncStatus: 'Облачная синхронизация: {status}',
+    syncOn: 'вкл',
+    syncOff: 'выкл',
+    syncSyncing: 'синхронизация\u2026',
+    syncOffline: 'нет соединения',
+    toastSignedIn: 'Вы вошли. Прогресс синхронизирован.',
+    toastSignedOut: 'Вы вышли.',
+    toastSynced: 'Прогресс восстановлен из облака.',
+    toastConfigSaved: 'Firebase подключён.',
+    errInvalidEmail: 'Некорректный адрес эл. почты.',
+    errWrongPassword: 'Неверный пароль. Попробуйте снова.',
+    errEmailInUse: 'Аккаунт с этой почтой уже существует. Войдите.',
+    errWeakPassword: 'Пароль должен быть не короче 6 символов.',
+    errNetwork: 'Ошибка сети. Проверьте соединение.',
+    errGeneric: 'Что-то пошло не так. Попробуйте снова.',
   },
 };
 
@@ -508,7 +595,11 @@ function load() {
   }
 }
 function save() {
+  state.updatedAt = Date.now();
+  const todayKey = dateKey(effectiveToday());
+  if (state.days[todayKey]) state.days[todayKey].updatedAt = Date.now();
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* storage full */ }
+  if (window.__cloudOnSave) window.__cloudOnSave();
 }
 
 /* ---------------- Date helpers ---------------- */
@@ -741,6 +832,16 @@ function renderSettings() {
 
   const sel = document.getElementById('rm-task');
   sel.innerHTML = TASKS.map(tk => `<option value="${tk.id}">${t(tk.labelKey)}</option>`).join('');
+
+  if (window.__renderAccount) window.__renderAccount();
+}
+
+/* ---------------- Render: all screens ---------------- */
+function renderAll() {
+  const started = !!state.startDate;
+  document.getElementById('welcome').classList.toggle('hidden', started);
+  document.getElementById('app').classList.toggle('hidden', !started);
+  if (started) { renderToday(); renderGrid(); renderGallery(); renderSettings(); }
 }
 
 /* ---------------- Reminders ---------------- */
