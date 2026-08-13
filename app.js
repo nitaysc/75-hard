@@ -155,7 +155,7 @@ function renderToday() {
   const list = document.getElementById('task-list');
   list.innerHTML = TASKS.map(t => {
     const doneTask = rec.tasks[t.id] === true;
-    const remind = state.reminders.find(r => r.taskId === t.id && r.enabled);
+    const remind = state.reminders.find(r => r.taskId === t.id);
     let tracker = '';
     if (t.tracker) {
       const pct = Math.min(100, Math.round((rec.water / GALLON_ML) * 100));
@@ -172,7 +172,11 @@ function renderToday() {
           </div>
         </div>`;
     }
+    let cam = '';
     let thumb = '';
+    if (t.id === 'photo') {
+      cam = `<button class="cam-btn" data-cam title="Open camera" aria-label="Take photo with camera">${ICONS.camera}</button>`;
+    }
     if (t.id === 'photo' && rec.photo) {
       thumb = `<img class="photo-thumb" src="${rec.photo}" alt="Today's progress photo" />`;
     }
@@ -183,12 +187,12 @@ function renderToday() {
         <div class="task-main">
           <div class="task-label">${t.label}</div>
           <div class="task-sub">
-            ${remind
-              ? `<span class="remind">${ICONS.bell} ${formatTime(remind.time)}</span>`
-              : `<span class="remind">Add reminder</span>`}
+            <button class="remind-btn" data-remind="${t.id}">
+              ${remind && remind.enabled ? `${ICONS.bell} ${formatTime(remind.time)}` : 'Add reminder'}
+            </button>
           </div>
         </div>
-        ${thumb}
+        ${cam}${thumb}
         ${tracker}
       </div>`;
   }).join('');
@@ -303,10 +307,14 @@ function formatHour(h) {
   return `${hr}:00`;
 }
 
-function openReminderModal(id) {
+function openReminderModal(id, presetTaskId) {
   const r = id ? state.reminders.find(x => x.id === id) : null;
+  const taskId = r ? r.taskId : (presetTaskId || TASKS[0].id);
   document.getElementById('rm-id').value = r ? r.id : '';
-  document.getElementById('rm-task').value = r ? r.taskId : TASKS[0].id;
+  document.getElementById('rm-title').textContent = r
+    ? `Reminder: ${taskById[taskId].label}`
+    : 'Reminder';
+  document.getElementById('rm-task').value = taskId;
   document.getElementById('rm-everyday').checked = !r || r.days.length === 7;
   document.getElementById('rm-time').value = r ? r.time : '17:00';
   const days = r ? r.days : [0, 1, 2, 3, 4, 5, 6];
@@ -315,6 +323,12 @@ function openReminderModal(id) {
   });
   document.getElementById('btn-del-reminder').classList.toggle('hidden', !r);
   showModal('modal-reminder');
+}
+
+/** Opens the reminder modal for a specific task (edits an existing one if present). */
+function openReminderForTask(taskId) {
+  const existing = state.reminders.find(r => r.taskId === taskId);
+  openReminderModal(existing ? existing.id : null, taskId);
 }
 
 function saveReminder() {
@@ -363,8 +377,15 @@ hiddenInput.accept = 'image/*';
 hiddenInput.style.display = 'none';
 document.body.appendChild(hiddenInput);
 
-hiddenInput.addEventListener('change', () => {
-  const file = hiddenInput.files && hiddenInput.files[0];
+// A second input with capture="environment" so phones open the camera directly.
+const cameraInput = document.createElement('input');
+cameraInput.type = 'file';
+cameraInput.accept = 'image/*';
+cameraInput.capture = 'environment';
+cameraInput.style.display = 'none';
+document.body.appendChild(cameraInput);
+
+function handlePhotoFile(file) {
   if (!file) return;
   compressImage(file).then(dataUrl => {
     const rec = dayRecord();
@@ -374,9 +395,13 @@ hiddenInput.addEventListener('change', () => {
     toast('Progress photo saved');
     vibrate(15);
   });
-});
+}
 
-function pickPhoto() { hiddenInput.click(); }
+hiddenInput.addEventListener('change', () => handlePhotoFile(hiddenInput.files[0]));
+cameraInput.addEventListener('change', () => handlePhotoFile(cameraInput.files[0]));
+
+function pickPhoto() { hiddenInput.click(); }          // choose an existing photo
+function pickCamera() { cameraInput.click(); }         // open the device camera
 
 /** Resizes & compresses an image to keep localStorage small. */
 function compressImage(file) {
@@ -578,6 +603,20 @@ function init() {
 
   // --- Task list (event delegation) ---
   document.getElementById('task-list').addEventListener('click', e => {
+    // Camera button on the photo task -> open the device camera directly.
+    const camBtn = e.target.closest('[data-cam]');
+    if (camBtn) {
+      vibrate(10);
+      pickCamera();
+      return;
+    }
+    // Add-reminder pill on any task -> open the reminder modal for that task.
+    const remindBtn = e.target.closest('[data-remind]');
+    if (remindBtn) {
+      vibrate(8);
+      openReminderForTask(remindBtn.dataset.remind);
+      return;
+    }
     const waterBtn = e.target.closest('.water-btn');
     if (waterBtn) {
       const rec = dayRecord();

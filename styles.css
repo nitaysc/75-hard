@@ -185,6 +185,33 @@ main { flex: 1; padding: 18px 18px 0; overflow-y: auto; }
   border: 1px solid var(--border2);
 }
 
+/* Reminder pill on task rows */
+.remind-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: inherit; font-size: 12.5px; font-weight: 700; color: var(--text-faint);
+  background: var(--card2); border: 1px solid var(--border2);
+  padding: 5px 11px; border-radius: 99px; margin-top: 4px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.08s ease, border-color 0.2s ease;
+  touch-action: manipulation;
+}
+.remind-btn svg { width: 13px; height: 13px; }
+.remind-btn:active { transform: scale(0.94); background: var(--red); color: #fff; border-color: var(--red); }
+.remind-btn:active svg { color: #fff; }
+.task.done .remind-btn { color: rgba(220,38,38,0.85); border-color: rgba(220,38,38,0.35); background: rgba(220,38,38,0.08); }
+.task.done .remind-btn svg { color: var(--red-bright); }
+
+/* Camera button on the progress photo task */
+.cam-btn {
+  width: 42px; height: 42px; min-width: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--red); color: #fff; border: 1px solid rgba(220,38,38,0.45);
+  box-shadow: 0 0 12px var(--red-glow);
+  transition: transform 0.08s ease, background 0.2s ease;
+  touch-action: manipulation;
+}
+.cam-btn svg { width: 21px; height: 21px; }
+.cam-btn:active { transform: scale(0.9); background: var(--red-bright); }
+
 /* ---------- Notes ---------- */
 .notes-card { background: #fff; border-radius: var(--radius); padding: 16px; }
 .notes-card textarea {

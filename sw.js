@@ -1,5 +1,5 @@
 /* 75 HARD service worker — offline caching */
-const CACHE = '75hard-v3';
+const CACHE = '75hard-v4';
 const ASSETS = [
   './',
   './index.html',
