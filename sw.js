@@ -1,14 +1,14 @@
 /* 75 HARD service worker — offline caching */
-const CACHE = '75hard-v15';
+const CACHE = '75hard-v16';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=14',
-  './app.js?v=14',
-  './logo.svg?v=14',
+  './styles.css?v=15',
+  './app.js?v=15',
+  './logo.svg?v=15',
   './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
+  './icons/icon-192.png?v=15',
+  './icons/icon-512.png?v=15',
 ];
 
 self.addEventListener('install', e => {
