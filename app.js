@@ -6,7 +6,7 @@
 
 /* ---------------- Constants ---------------- */
 const STORAGE_KEY = 'seventyfivehard.v1';
-const APP_VERSION = '13';
+const APP_VERSION = '14';
 const DAYS_TOTAL = 75;
 const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
@@ -899,7 +899,7 @@ function getLogoImage() {
       const im = new Image();
       im.onload = () => resolve(im);
       im.onerror = () => resolve(null);
-      im.src = 'logo.svg';
+      im.src = 'logo.svg?v=14';
     });
   }
   return logoImgPromise;
