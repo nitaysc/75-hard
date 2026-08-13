@@ -441,18 +441,6 @@ main { flex: 1; padding: 18px 18px 0; overflow-y: auto; }
 }
 .motiv-quote-mark { color: var(--red); font-weight: 900; font-size: 30px; }
 
-/* ---------- Account / cloud sync ---------- */
-.fb-config {
-  width: 100%; min-height: 160px; background: var(--card2); border: 1px solid var(--border2);
-  color: var(--text); border-radius: 12px; padding: 12px 14px; font-family: "SF Mono", Consolas, monospace;
-  font-size: 12px; line-height: 1.5; outline: none; resize: vertical; margin-top: 4px;
-}
-.auth-input { margin-bottom: 2px; }
-.auth-actions { display: flex; gap: 10px; margin-top: 12px; }
-.auth-actions .btn { flex: 1; }
-.account-email { font-size: 14px; font-weight: 700; word-break: break-all; }
-#welcome-account { margin-top: 14px; }
-
 /* Toast */
 .toast {
   position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 26px); transform: translateX(-50%);

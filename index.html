@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/png" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=11" />
   <title>75 HARD</title>
 </head>
 <body>
@@ -33,7 +33,6 @@
       </div>
       <p class="welcome-warn" data-i18n="welcomeWarn">Miss a single task and the counter resets to Day 1. That's the point.</p>
       <button id="btn-start" class="btn btn-primary btn-lg" data-i18n="btnStart">Start Day 1</button>
-      <div id="welcome-account"></div>
     </div>
   </div>
 
@@ -128,11 +127,6 @@
             <option value="he">עברית</option>
             <option value="ru">Русский</option>
           </select>
-        </div>
-
-        <div class="set-group">
-          <div class="set-label" data-i18n="accountLabel">Account &amp; cloud sync</div>
-          <div id="account-body"></div>
         </div>
 
         <div class="set-group">
@@ -303,24 +297,9 @@
     </div>
   </div>
 
-  <!-- Firebase setup modal -->
-  <div id="modal-firebase" class="modal-backdrop hidden">
-    <div class="modal-sheet">
-      <div class="modal-grab"></div>
-      <div class="modal-head">
-        <span class="modal-title" data-i18n="setupTitle">Connect Firebase</span>
-        <button class="icon-btn close" data-close="modal-firebase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-      </div>
-      <p class="set-hint" data-i18n="setupHint">Paste your Firebase web-app config.</p>
-      <textarea id="fb-config-input" class="fb-config" data-i18n-ph="configPlaceholder" placeholder="{...}" spellcheck="false"></textarea>
-      <button class="btn btn-primary btn-block" id="btn-fb-connect" data-i18n="connect">Connect</button>
-    </div>
-  </div>
-
   <!-- Toast -->
   <div id="toast" class="toast hidden"></div>
 
-  <script src="app.js?v=12"></script>
-  <script src="cloud.js?v=12"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>
