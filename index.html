@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
@@ -12,7 +12,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/png" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
   <title>75 HARD</title>
 </head>
 <body>
@@ -21,29 +21,29 @@
   <div id="welcome" class="screen hidden">
     <div class="welcome-inner">
       <div class="brand-badge big">75 HARD</div>
-      <h1 class="welcome-title">The 75-day mental<br />toughness challenge.</h1>
-      <p class="welcome-sub">Two workouts. A gallon of water. 10 pages. A photo. A diet. Every day. No exceptions.</p>
+      <h1 class="welcome-title" data-i18n="welcomeTitle">The 75-day mental<br />toughness challenge.</h1>
+      <p class="welcome-sub" data-i18n="welcomeSub">Two workouts. A gallon of water. 10 pages. A photo. A diet. Every day. No exceptions.</p>
       <div class="rules-card">
-        <div class="rule-row"><span class="rule-dot"></span><span>Two 45-minute workouts — one outdoors</span></div>
-        <div class="rule-row"><span class="rule-dot"></span><span>Drink 1 gallon of water</span></div>
-        <div class="rule-row"><span class="rule-dot"></span><span>Read 10 pages of non-fiction</span></div>
-        <div class="rule-row"><span class="rule-dot"></span><span>Take a daily progress picture</span></div>
-        <div class="rule-row"><span class="rule-dot"></span><span>Follow a diet</span></div>
-        <div class="rule-row"><span class="rule-dot"></span><span>No cheat meals or alcohol</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule1">Two 45-minute workouts — one outdoors</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule2">Drink 1 gallon of water</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule3">Read 10 pages of non-fiction</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule4">Take a daily progress picture</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule5">Follow a diet</span></div>
+        <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule6">No cheat meals or alcohol</span></div>
       </div>
-      <p class="welcome-warn">Miss a single task and the counter resets to Day 1. That's the point.</p>
-      <button id="btn-start" class="btn btn-primary btn-lg">Start Day 1</button>
+      <p class="welcome-warn" data-i18n="welcomeWarn">Miss a single task and the counter resets to Day 1. That's the point.</p>
+      <button id="btn-start" class="btn btn-primary btn-lg" data-i18n="btnStart">Start Day 1</button>
     </div>
   </div>
 
   <!-- ================= COMPLETE SCREEN ================= -->
   <div id="complete" class="screen hidden">
     <div class="welcome-inner center">
-      <div class="stamp stamp-big">COMPLETED</div>
+      <div class="stamp stamp-big" data-i18n="completedStamp">COMPLETED</div>
       <div class="brand-badge big">75 HARD</div>
-      <h1 class="welcome-title">You did it.<br />75 days strong.</h1>
-      <p class="welcome-sub">Discipline over motivation. You built an unbreakable streak.</p>
-      <button id="btn-restart-complete" class="btn btn-primary btn-lg">Do it again</button>
+      <h1 class="welcome-title" data-i18n="completeTitle">You did it.<br />75 days strong.</h1>
+      <p class="welcome-sub" data-i18n="completeSub">Discipline over motivation. You built an unbreakable streak.</p>
+      <button id="btn-restart-complete" class="btn btn-primary btn-lg" data-i18n="btnAgain">Do it again</button>
     </div>
   </div>
 
@@ -66,7 +66,7 @@
       <section id="view-today" class="view">
         <div class="day-hero">
           <div class="day-num-wrap">
-            <div class="day-label">DAY</div>
+            <div class="day-label" data-i18n="dayLabel">DAY</div>
             <div class="day-num" id="day-num">1</div>
           </div>
           <svg class="ring" viewBox="0 0 120 120">
@@ -77,98 +77,107 @@
         </div>
         <p class="day-date" id="day-date"></p>
 
-        <div class="section-title">Today's tasks</div>
+        <div class="section-title" data-i18n="todayTasks">Today's tasks</div>
         <div class="task-list" id="task-list"></div>
 
-        <div class="section-title">Notes</div>
+        <div class="section-title" data-i18n="notesTitle">Notes</div>
         <div class="notes-card">
-          <textarea id="notes-input" rows="4" placeholder="Challenges, insights, breakthroughs — make notes of your day."></textarea>
-          <div class="notes-foot">Saved automatically</div>
+          <textarea id="notes-input" rows="4" data-i18n-ph="notesPlaceholder" placeholder="Challenges, insights, breakthroughs — make notes of your day."></textarea>
+          <div class="notes-foot" data-i18n="notesSaved">Saved automatically</div>
         </div>
         <div class="bottom-space"></div>
       </section>
 
       <!-- ===== GRID VIEW ===== -->
       <section id="view-grid" class="view hidden">
-        <h2 class="view-title">Progress</h2>
-        <p class="view-sub">Tap any completed day to view its details.</p>
+        <h2 class="view-title" data-i18n="gridTitle">Progress</h2>
+        <p class="view-sub" data-i18n="gridSub">Tap any completed day to view its details.</p>
         <div class="grid-head">
-          <div class="grid-stat"><span class="stat-num" id="stat-done">0</span><span class="stat-lbl">days done</span></div>
-          <div class="grid-stat"><span class="stat-num" id="stat-cur">1</span><span class="stat-lbl">current day</span></div>
+          <div class="grid-stat"><span class="stat-num" id="stat-done">0</span><span class="stat-lbl" data-i18n="statDone">days done</span></div>
+          <div class="grid-stat"><span class="stat-num" id="stat-cur">1</span><span class="stat-lbl" data-i18n="statCur">current day</span></div>
         </div>
         <div class="grid-75" id="grid-75"></div>
         <div class="rules-card grid-rules">
-          <div class="rule-row"><span class="rule-dot"></span><span>Two 45-min workouts, one outdoors</span></div>
-          <div class="rule-row"><span class="rule-dot"></span><span>1 gallon of water</span></div>
-          <div class="rule-row"><span class="rule-dot"></span><span>Read 10 pages</span></div>
-          <div class="rule-row"><span class="rule-dot"></span><span>Daily progress pic</span></div>
-          <div class="rule-row"><span class="rule-dot"></span><span>Follow a diet</span></div>
-          <div class="rule-row"><span class="rule-dot"></span><span>No cheat meals or alcohol</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule1">Two 45-min workouts, one outdoors</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule2">1 gallon of water</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule3">Read 10 pages</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule4">Daily progress pic</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule5">Follow a diet</span></div>
+          <div class="rule-row"><span class="rule-dot"></span><span data-i18n="rule6">No cheat meals or alcohol</span></div>
         </div>
         <div class="bottom-space"></div>
       </section>
 
       <!-- ===== GALLERY VIEW ===== -->
       <section id="view-gallery" class="view hidden">
-        <h2 class="view-title">Progress photos</h2>
-        <p class="view-sub">Your daily transformation, day by day.</p>
+        <h2 class="view-title" data-i18n="galleryTitle">Progress photos</h2>
+        <p class="view-sub" data-i18n="gallerySub">Your daily transformation, day by day.</p>
         <div id="gallery-list" class="gallery-list"></div>
         <div class="bottom-space"></div>
       </section>
 
       <!-- ===== SETTINGS VIEW ===== -->
       <section id="view-settings" class="view hidden">
-        <h2 class="view-title">Settings</h2>
+        <h2 class="view-title" data-i18n="settingsTitle">Settings</h2>
 
         <div class="set-group">
-          <div class="set-label">Day ends at</div>
-          <p class="set-hint">Tasks past this time count toward the next day.</p>
-          <select id="set-day-end" class="set-select">
-            <option value="0">12:00 AM (midnight)</option>
-            <option value="1">1:00 AM</option>
-            <option value="2">2:00 AM</option>
-            <option value="3">3:00 AM</option>
-            <option value="4">4:00 AM</option>
+          <div class="set-label" data-i18n="languageLabel">Language</div>
+          <select id="set-lang" class="set-select">
+            <option value="en">English</option>
+            <option value="he">עברית</option>
+            <option value="ru">Русский</option>
           </select>
         </div>
 
         <div class="set-group">
-          <div class="set-label">Reminders</div>
-          <p class="set-hint">Get notified for your daily tasks.</p>
-          <div id="reminder-list" class="reminder-list"></div>
-          <button class="btn btn-ghost" id="btn-add-reminder">+ Add reminder</button>
+          <div class="set-label" data-i18n="dayEndLabel">Day ends at</div>
+          <p class="set-hint" data-i18n="dayEndHint">Tasks past this time count toward the next day.</p>
+          <select id="set-day-end" class="set-select">
+            <option value="0" data-i18n="dayEnd0">12:00 AM (midnight)</option>
+            <option value="1" data-i18n="dayEnd1">1:00 AM</option>
+            <option value="2" data-i18n="dayEnd2">2:00 AM</option>
+            <option value="3" data-i18n="dayEnd3">3:00 AM</option>
+            <option value="4" data-i18n="dayEnd4">4:00 AM</option>
+          </select>
         </div>
 
         <div class="set-group">
-          <div class="set-label">Motivation popups</div>
-          <p class="set-hint">Show a fun video or a motivational quote whenever you complete a task.</p>
+          <div class="set-label" data-i18n="remindersLabel">Reminders</div>
+          <p class="set-hint" data-i18n="remindersHint">Get notified for your daily tasks.</p>
+          <div id="reminder-list" class="reminder-list"></div>
+          <button class="btn btn-ghost" id="btn-add-reminder" data-i18n="addReminderBtn">+ Add reminder</button>
+        </div>
+
+        <div class="set-group">
+          <div class="set-label" data-i18n="motivationLabel">Motivation popups</div>
+          <p class="set-hint" data-i18n="motivationHint">Show a fun video or a motivational quote whenever you complete a task.</p>
           <div class="switch-row">
-            <span>Enable motivation popups</span>
+            <span data-i18n="motivationSwitch">Enable motivation popups</span>
             <label class="switch"><input type="checkbox" id="switch-motivation"><span class="slider"></span></label>
           </div>
         </div>
 
         <div class="set-group">
-          <div class="set-label">Notifications</div>
+          <div class="set-label" data-i18n="notifLabel">Notifications</div>
           <div class="switch-row">
-            <span>Allow notifications</span>
+            <span data-i18n="allowNotif">Allow notifications</span>
             <label class="switch"><input type="checkbox" id="switch-notif"><span class="slider"></span></label>
           </div>
-          <button class="btn btn-ghost" id="btn-test-notif">Send test notification</button>
+          <button class="btn btn-ghost" id="btn-test-notif" data-i18n="testNotif">Send test notification</button>
         </div>
 
         <div class="set-group danger">
-          <div class="set-label">Danger zone</div>
-          <button class="btn btn-danger" id="btn-clear-cache">Clear cache &amp; update</button>
-          <button class="btn btn-danger" id="btn-reset">Reset to Day 1</button>
-          <button class="btn btn-danger" id="btn-wipe">Delete all data</button>
+          <div class="set-label" data-i18n="dangerLabel">Danger zone</div>
+          <button class="btn btn-danger" id="btn-clear-cache" data-i18n="clearCache">Clear cache &amp; update</button>
+          <button class="btn btn-danger" id="btn-reset" data-i18n="resetDay1">Reset to Day 1</button>
+          <button class="btn btn-danger" id="btn-wipe" data-i18n="wipeData">Delete all data</button>
         </div>
 
         <div class="set-group about">
           <div class="brand-badge">75 HARD</div>
-          <p>Inspired by Andy Frisella's 75 Hard challenge. Build discipline. Earn your day.</p>
-          <p class="about-meta">Day ends: <span id="about-day-end">1:00 AM</span></p>
-          <p class="about-meta">App version: <span id="about-version">&mdash;</span></p>
+          <p data-i18n="aboutText">Inspired by Andy Frisella's 75 Hard challenge. Build discipline. Earn your day.</p>
+          <p class="about-meta"><span data-i18n="dayEnds">Day ends:</span> <span id="about-day-end">1:00 AM</span></p>
+          <p class="about-meta"><span data-i18n="appVersion">App version:</span> <span id="about-version">&mdash;</span></p>
         </div>
         <div class="bottom-space"></div>
       </section>
@@ -179,19 +188,19 @@
     <nav class="tabbar" id="tabbar">
       <button class="tab active" data-view="today">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-        <span>Today</span>
+        <span data-i18n="tabToday">Today</span>
       </button>
       <button class="tab" data-view="grid">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        <span>Grid</span>
+        <span data-i18n="tabGrid">Grid</span>
       </button>
       <button class="tab" data-view="gallery">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5a2 2 0 0 0-2.8 0L6 20"/></svg>
-        <span>Photos</span>
+        <span data-i18n="tabPhotos">Photos</span>
       </button>
       <button class="tab" data-view="settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        <span>Settings</span>
+        <span data-i18n="tabSettings">Settings</span>
       </button>
     </nav>
   </div>
@@ -221,26 +230,26 @@
         <button class="icon-btn close" data-close="modal-reminder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       </div>
       <input type="hidden" id="rm-id" />
-      <label class="field-label">Task</label>
+      <label class="field-label" data-i18n="fieldTask">Task</label>
       <select id="rm-task" class="set-select"></select>
 
       <div class="switch-row">
-        <span>Every day</span>
+        <span data-i18n="everyday">Every day</span>
         <label class="switch"><input type="checkbox" id="rm-everyday" checked><span class="slider"></span></label>
       </div>
 
-      <label class="field-label">Days</label>
+      <label class="field-label" data-i18n="fieldDays">Days</label>
       <div class="week-row" id="rm-week">
         <button data-d="1">M</button><button data-d="2">T</button><button data-d="3">W</button>
         <button data-d="4">T</button><button data-d="5">F</button><button data-d="6">S</button>
         <button data-d="0">S</button>
       </div>
 
-      <label class="field-label">Time</label>
+      <label class="field-label" data-i18n="fieldTime">Time</label>
       <input type="time" id="rm-time" class="set-select time-input" value="17:00" />
 
-      <button class="btn btn-primary btn-block" id="btn-save-reminder">Save</button>
-      <button class="btn btn-ghost btn-block hidden" id="btn-del-reminder">Delete reminder</button>
+      <button class="btn btn-primary btn-block" id="btn-save-reminder" data-i18n="save">Save</button>
+      <button class="btn btn-ghost btn-block hidden" id="btn-del-reminder" data-i18n="deleteReminder">Delete reminder</button>
     </div>
   </div>
 
@@ -251,8 +260,8 @@
       <div class="modal-head"><span class="modal-title" id="confirm-title">Are you sure?</span></div>
       <p class="confirm-text" id="confirm-text"></p>
       <div class="confirm-actions">
-        <button class="btn btn-ghost" data-close="modal-confirm">Cancel</button>
-        <button class="btn btn-danger" id="btn-confirm-yes">Yes, reset</button>
+        <button class="btn btn-ghost" data-close="modal-confirm" data-i18n="cancel">Cancel</button>
+        <button class="btn btn-danger" id="btn-confirm-yes">Confirm</button>
       </div>
     </div>
   </div>
@@ -262,7 +271,7 @@
     <div class="photo-viewer">
       <div class="photo-top">
         <button class="icon-btn close light" data-close="modal-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-        <button class="btn btn-ghost light" id="btn-share">Share</button>
+        <button class="btn btn-ghost light" id="btn-share" data-i18n="share">Share</button>
       </div>
       <div class="photo-stage">
         <img id="pv-img" alt="Progress photo" />
@@ -270,7 +279,7 @@
       </div>
       <div class="pv-caption">
         <div class="pv-day" id="pv-day">DAY 15</div>
-        <div class="pv-quote">Learn how to deal with discomfort and it opens the door to everything.</div>
+        <div class="pv-quote" data-i18n="pvQuote">Learn how to deal with discomfort and it opens the door to everything.</div>
       </div>
     </div>
   </div>
@@ -280,17 +289,17 @@
     <div class="modal-sheet motivation">
       <div class="modal-grab"></div>
       <div class="modal-head">
-        <span class="modal-title" id="motiv-title">Nice work!</span>
+        <span class="modal-title" id="motiv-title" data-i18n="motivTitle">Nice work!</span>
         <button class="icon-btn close" data-close="modal-motivation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
       </div>
       <div id="motiv-body" class="motiv-body"></div>
-      <button class="btn btn-primary btn-block" id="btn-motiv-close">Keep going &#x1F525;</button>
+      <button class="btn btn-primary btn-block" id="btn-motiv-close" data-i18n="keepGoing">Keep going &#x1F525;</button>
     </div>
   </div>
 
   <!-- Toast -->
   <div id="toast" class="toast hidden"></div>
 
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>

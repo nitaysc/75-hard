@@ -468,3 +468,13 @@ main { flex: 1; padding: 18px 18px 0; overflow-y: auto; }
   .task-list { gap: 12px; }
   .gallery-list { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ---------- RTL (Hebrew) ---------- */
+[dir="rtl"] .set-select { background-position: left 14px center; }
+[dir="rtl"] .welcome-inner,
+[dir="rtl"] .notes-card textarea,
+[dir="rtl"] .mday-notes,
+[dir="rtl"] .confirm-text { text-align: right; }
+[dir="rtl"] .pv-caption { text-align: right; }
+[dir="rtl"] .motiv-quote { direction: rtl; }
+[dir="rtl"] .day-num { letter-spacing: 0; }

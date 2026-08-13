@@ -12,21 +12,439 @@ const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
 const QUOTE = 'Learn how to deal with discomfort and it opens the door to everything. What can stop you if you willingly seek out all the things nobody else is willing to do?';
 
-/* Random motivation shown on task completion */
-const MOTIV_QUOTES = [
-  'You got this. Keep going!',
-  'One more task down. Stay hard.',
-  'Discipline is doing it anyway. Nice.',
-  'Small steps. Big results. Keep pushing.',
-  'You are tougher than you think.',
-  'Future you is proud of you right now.',
-  'Nothing can stop you today.',
-  'Earned it. Now go get the next one.',
-  'Consistency beats intensity. Keep showing up.',
-  'Almost there. Do not slow down.',
-  'That is what winners do. Show up again.',
-  'Pain is temporary. Quitting is forever.',
-];
+/* ---------------- Translations (en / he / ru) ---------------- */
+const I18N = {
+  en: {
+    welcomeTitle: 'The 75-day mental<br />toughness challenge.',
+    welcomeSub: 'Two workouts. A gallon of water. 10 pages. A photo. A diet. Every day. No exceptions.',
+    rule1: 'Two 45-minute workouts — one outdoors',
+    rule2: 'Drink 1 gallon of water',
+    rule3: 'Read 10 pages of non-fiction',
+    rule4: 'Take a daily progress picture',
+    rule5: 'Follow a diet',
+    rule6: 'No cheat meals or alcohol',
+    welcomeWarn: 'Miss a single task and the counter resets to Day 1. That\'s the point.',
+    btnStart: 'Start Day 1',
+    completedStamp: 'COMPLETED',
+    completeTitle: 'You did it.<br />75 days strong.',
+    completeSub: 'Discipline over motivation. You built an unbreakable streak.',
+    btnAgain: 'Do it again',
+    dayLabel: 'DAY',
+    todayTasks: 'Today\'s tasks',
+    notesTitle: 'Notes',
+    notesPlaceholder: 'Challenges, insights, breakthroughs — make notes of your day.',
+    notesSaved: 'Saved automatically',
+    t1: '45 Minute Workout',
+    t2: '45 Minute Outdoor Workout',
+    t3: 'Take Progress Picture',
+    t4: '10 Pages of Reading',
+    t5: 'Drink 1 Gallon of Water',
+    t6: 'Follow a Diet',
+    t7: 'No Cheat Meals or Alcohol',
+    addReminder: 'Add reminder',
+    cup: 'cup',
+    off: 'OFF',
+    gridTitle: 'Progress',
+    gridSub: 'Tap any completed day to view its details.',
+    statDone: 'days done',
+    statCur: 'current day',
+    galleryTitle: 'Progress photos',
+    gallerySub: 'Your daily transformation, day by day.',
+    galleryEmpty: 'No progress photos yet.<br/>Take your daily photo from the Today tab.',
+    settingsTitle: 'Settings',
+    languageLabel: 'Language',
+    dayEndLabel: 'Day ends at',
+    dayEndHint: 'Tasks past this time count toward the next day.',
+    dayEnd0: '12:00 AM (midnight)',
+    dayEnd1: '1:00 AM',
+    dayEnd2: '2:00 AM',
+    dayEnd3: '3:00 AM',
+    dayEnd4: '4:00 AM',
+    remindersLabel: 'Reminders',
+    remindersHint: 'Get notified for your daily tasks.',
+    noReminders: 'No reminders yet. Add one below.',
+    addReminderBtn: '+ Add reminder',
+    motivationLabel: 'Motivation popups',
+    motivationHint: 'Show a fun video or a motivational quote whenever you complete a task.',
+    motivationSwitch: 'Enable motivation popups',
+    notifLabel: 'Notifications',
+    allowNotif: 'Allow notifications',
+    testNotif: 'Send test notification',
+    dangerLabel: 'Danger zone',
+    clearCache: 'Clear cache & update',
+    resetDay1: 'Reset to Day 1',
+    wipeData: 'Delete all data',
+    aboutText: 'Inspired by Andy Frisella\'s 75 Hard challenge. Build discipline. Earn your day.',
+    dayEnds: 'Day ends:',
+    appVersion: 'App version:',
+    reminderTitle: 'Reminder',
+    reminderFor: 'Reminder: {task}',
+    fieldTask: 'Task',
+    everyday: 'Every day',
+    fieldDays: 'Days',
+    fieldTime: 'Time',
+    save: 'Save',
+    deleteReminder: 'Delete reminder',
+    pickDay: 'Pick at least one day',
+    reminderSaved: 'Reminder saved',
+    reminderDeleted: 'Reminder deleted',
+    reminderOn: 'Reminder on',
+    reminderOff: 'Reminder off',
+    noPhoto: 'No photo taken',
+    confirmResetTitle: 'Reset to Day 1?',
+    confirmResetText: 'This starts a fresh 75-day run. All progress photos, notes and check-ins will be wiped. There is no undo.',
+    confirmWipeTitle: 'Delete all data?',
+    confirmWipeText: 'Removes the challenge and every trace of data stored on this device.',
+    cancel: 'Cancel',
+    yesReset: 'Yes, reset',
+    yesDelete: 'Yes, delete',
+    share: 'Share',
+    pvQuote: 'Learn how to deal with discomfort and it opens the door to everything. What can stop you if you willingly seek out all the things nobody else is willing to do?',
+    motivTitle: 'Nice work!',
+    keepGoing: 'Keep going \u{1F525}',
+    quotes: [
+      'You got this. Keep going!',
+      'One more task down. Stay hard.',
+      'Discipline is doing it anyway. Nice.',
+      'Small steps. Big results. Keep pushing.',
+      'You are tougher than you think.',
+      'Future you is proud of you right now.',
+      'Nothing can stop you today.',
+      'Earned it. Now go get the next one.',
+      'Consistency beats intensity. Keep showing up.',
+      'Almost there. Do not slow down.',
+      'That is what winners do. Show up again.',
+      'Pain is temporary. Quitting is forever.',
+    ],
+    weekdays: { 0: 'S', 1: 'M', 2: 'T', 3: 'W', 4: 'T', 5: 'F', 6: 'S' },
+    shareRules: [
+      'Two 45 min workouts', 'One workout must be outdoors', 'Follow a diet',
+      'Take a progress pic', '1 gallon of water', 'No alcohol or cheat meals', 'Read 10 pages',
+    ],
+    tabToday: 'Today', tabGrid: 'Grid', tabPhotos: 'Photos', tabSettings: 'Settings',
+    toastReset: 'You missed a task \u2014 counter reset to Day 1.',
+    toastDay1: 'Day 1 starts now. No excuses.',
+    toastRound2: 'Round two. Day 1.',
+    toastDayComplete: 'Day complete \u2014 stay hard.',
+    toastPhotoSaved: 'Progress photo saved',
+    toastReminderSaved: 'Reminder saved',
+    toastReminderDeleted: 'Reminder deleted',
+    toastReminderOn: 'Reminder on',
+    toastReminderOff: 'Reminder off',
+    toastPickDay: 'Pick at least one day',
+    toastNotifUnsupported: 'Notifications not supported',
+    toastNotifBlocked: 'Notifications blocked in browser settings',
+    toastNotifOff: 'Notifications off',
+    toastMotivOn: 'Motivation popups on',
+    toastMotivOff: 'Motivation popups off',
+    toastClearing: 'Clearing cache...',
+    toastUpdated: 'Updated \u2014 refreshing...',
+    toastResetTo1: 'Reset to Day 1.',
+    toastWiped: 'All data deleted',
+    toastDayEnd: 'Day end updated',
+    toastShare: 'Success card downloaded',
+    toastLang: 'Language changed',
+    notifTitle: '75 HARD \u2014 Reminder',
+    notifBody: '{task} \u2014 {time}. Stay disciplined.',
+    notifTestTitle: '75 HARD',
+    notifTestBody: 'Notifications are working. Stay hard.',
+    dayWord: 'DAY',
+  },
+  he: {
+    welcomeTitle: 'אתגר החוסן המנטלי<br />של 75 יום.',
+    welcomeSub: 'שני אימונים. גלון מים. 10 עמודים. תמונה. דיאטה. כל יום. בלי יוצאים מן הכלל.',
+    rule1: 'שני אימונים של 45 דקות — אחד בחוץ',
+    rule2: 'לשתות גלון מים',
+    rule3: 'לקרוא 10 עמודים של ספר עיון',
+    rule4: 'לצלם תמונת התקדמות יומית',
+    rule5: 'להקפיד על דיאטה',
+    rule6: 'בלי ארוחות חופשיות או אלכוהול',
+    welcomeWarn: 'פספסת מטלה אחת והמונה מתאפס ליום 1. זו כל הנקודה.',
+    btnStart: 'התחל יום 1',
+    completedStamp: 'הושלם',
+    completeTitle: 'עשית את זה.<br />75 ימים חזק.',
+    completeSub: 'משמעת במקום מוטיבציה. בנית רצף בלתי שביר.',
+    btnAgain: 'עשה זאת שוב',
+    dayLabel: 'יום',
+    todayTasks: 'המטלות של היום',
+    notesTitle: 'הערות',
+    notesPlaceholder: 'אתגרים, תובנות, פריצות דרך — רשמו הערות על היום שלכם.',
+    notesSaved: 'נשמר אוטומטית',
+    t1: 'אימון 45 דקות',
+    t2: 'אימון חוץ 45 דקות',
+    t3: 'צלם תמונת התקדמות',
+    t4: '10 עמודים של קריאה',
+    t5: 'שתה גלון מים',
+    t6: 'הקפד על דיאטה',
+    t7: 'בלי ארוחות חופשיות או אלכוהול',
+    addReminder: 'הוסף תזכורת',
+    cup: 'כוס',
+    off: 'כבויה',
+    gridTitle: 'התקדמות',
+    gridSub: 'הקש על יום שהושלם כדי לראות את הפרטים.',
+    statDone: 'ימים שהושלמו',
+    statCur: 'יום נוכחי',
+    galleryTitle: 'תמונות התקדמות',
+    gallerySub: 'השינוי היומי שלך, יום אחרי יום.',
+    galleryEmpty: 'אין עדיין תמונות התקדמות.<br/>צלמו את התמונה היומית מהלשונית "היום".',
+    settingsTitle: 'הגדרות',
+    languageLabel: 'שפה',
+    dayEndLabel: 'היום מסתיים ב־',
+    dayEndHint: 'מטלות אחרי שעה זו נספרות ליום הבא.',
+    dayEnd0: '12:00 (חצות)',
+    dayEnd1: '1:00 לפנות בוקר',
+    dayEnd2: '2:00 לפנות בוקר',
+    dayEnd3: '3:00 לפנות בוקר',
+    dayEnd4: '4:00 לפנות בוקר',
+    remindersLabel: 'תזכורות',
+    remindersHint: 'קבל התראות על המטלות היומיות שלך.',
+    noReminders: 'אין תזכורות עדיין. הוסף אחת למטה.',
+    addReminderBtn: 'הוסף תזכורת',
+    motivationLabel: 'חלונות מוטיבציה',
+    motivationHint: 'הצג סרטון כיפי או ציטוט מעודד כשאתה מסיים מטלה.',
+    motivationSwitch: 'הפעל חלונות מוטיבציה',
+    notifLabel: 'התראות',
+    allowNotif: 'אפשר התראות',
+    testNotif: 'שלח התראת בדיקה',
+    dangerLabel: 'אזור מסוכן',
+    clearCache: 'נקה מטמון ועדכן',
+    resetDay1: 'אפס ליום 1',
+    wipeData: 'מחק את כל הנתונים',
+    aboutText: 'בהשראת אתגר 75 Hard של אנדי פריסלה. בנה משמעת. תרוויח את היום שלך.',
+    dayEnds: 'היום מסתיים:',
+    appVersion: 'גרסת האפליקציה:',
+    reminderTitle: 'תזכורת',
+    reminderFor: 'תזכורת: {task}',
+    fieldTask: 'מטלה',
+    everyday: 'כל יום',
+    fieldDays: 'ימים',
+    fieldTime: 'שעה',
+    save: 'שמור',
+    deleteReminder: 'מחק תזכורת',
+    pickDay: 'בחר לפחות יום אחד',
+    reminderSaved: 'התזכורת נשמרה',
+    reminderDeleted: 'התזכורת נמחקה',
+    reminderOn: 'התזכורת פעילה',
+    reminderOff: 'התזכורת כבויה',
+    noPhoto: 'לא צולמה תמונה',
+    confirmResetTitle: 'לאפס ליום 1?',
+    confirmResetText: 'זה מתחיל ריצה חדשה של 75 יום. כל תמונות ההתקדמות, ההערות והסימונים יימחקו. אין דרך חזרה.',
+    confirmWipeTitle: 'למחוק את כל הנתונים?',
+    confirmWipeText: 'מסיר את האתגר וכל זכר לנתונים שנשמרו במכשיר הזה.',
+    cancel: 'ביטול',
+    yesReset: 'כן, אפס',
+    yesDelete: 'כן, מחק',
+    share: 'שתף',
+    pvQuote: 'תלמד להתמודד עם אי־נוחות וכל הדלתות ייפתחו לפניך. מה יכול לעצור אותך אם תחפש ברצון את כל הדברים שאף אחד אחר לא מוכן לעשות?',
+    motivTitle: 'כל הכבוד!',
+    keepGoing: 'תמשיך! \u{1F525}',
+    quotes: [
+      'אתה יכול. תמשיך!',
+      'עוד מטלה הושלמה. תישאר חזק.',
+      'משמעת זה לעשות את זה בכל זאת. כל הכבוד.',
+      'צעדים קטנים. תוצאות גדולות. תמשיך לדחוף.',
+      'אתה קשוח יותר ממה שאתה חושב.',
+      'העצמי העתידי שלך גאה בך עכשיו.',
+      'שום דבר לא יעצור אותך היום.',
+      'הרווחת את זה. עכשיו לך על הבאה.',
+      'עקביות גוברת על אינטנסיביות. תמשיך להופיע.',
+      'כמעט שם. אל תאט.',
+      'ככה מנצחים. תופיע שוב.',
+      'כאב הוא זמני. ויתור הוא לנצח.',
+    ],
+    weekdays: { 0: 'א', 1: 'ב', 2: 'ג', 3: 'ד', 4: 'ה', 5: 'ו', 6: 'ש' },
+    shareRules: [
+      'שני אימונים של 45 דקות', 'אימון אחד חייב להיות בחוץ', 'הקפד על דיאטה',
+      'צלם תמונת התקדמות', 'גלון מים', 'בלי אלכוהול או ארוחות חופשיות', 'קרא 10 עמודים',
+    ],
+    tabToday: 'היום', tabGrid: 'רשת', tabPhotos: 'תמונות', tabSettings: 'הגדרות',
+    toastReset: 'החמצת מטלה — המונה התאפס ליום 1.',
+    toastDay1: 'יום 1 מתחיל עכשיו. בלי תירוצים.',
+    toastRound2: 'סיבוב שני. יום 1.',
+    toastDayComplete: 'היום הושלם — תישאר חזק.',
+    toastPhotoSaved: 'תמונת ההתקדמות נשמרה',
+    toastReminderSaved: 'התזכורת נשמרה',
+    toastReminderDeleted: 'התזכורת נמחקה',
+    toastReminderOn: 'התזכורת פעילה',
+    toastReminderOff: 'התזכורת כבויה',
+    toastPickDay: 'בחר לפחות יום אחד',
+    toastNotifUnsupported: 'התראות לא נתמכות בדפדפן',
+    toastNotifBlocked: 'ההתראות נחסמו בהגדרות הדפדפן',
+    toastNotifOff: 'ההתראות כבויות',
+    toastMotivOn: 'חלונות המוטיבציה פעילים',
+    toastMotivOff: 'חלונות המוטיבציה כבויים',
+    toastClearing: 'מנקה מטמון...',
+    toastUpdated: 'עודכן — מרענן...',
+    toastResetTo1: 'אופס ליום 1.',
+    toastWiped: 'כל הנתונים נמחקו',
+    toastDayEnd: 'שעת סיום היום עודכנה',
+    toastShare: 'כרטיס ההצלחה הורד',
+    toastLang: 'השפה שונתה',
+    notifTitle: '75 HARD — תזכורת',
+    notifBody: '{task} — {time}. הישאר ממוקד.',
+    notifTestTitle: '75 HARD',
+    notifTestBody: 'ההתראות עובדות. תישאר חזק.',
+    dayWord: 'יום',
+  },
+  ru: {
+    welcomeTitle: 'Испытание психологической стойкости<br />на 75 дней.',
+    welcomeSub: 'Две тренировки. Галлон воды. 10 страниц. Фото. Диета. Каждый день. Без исключений.',
+    rule1: 'Две тренировки по 45 минут — одна на улице',
+    rule2: 'Выпить галлон воды',
+    rule3: 'Прочитать 10 страниц нон-фикшн',
+    rule4: 'Ежедневное фото прогресса',
+    rule5: 'Соблюдать диету',
+    rule6: 'Никаких читмилов или алкоголя',
+    welcomeWarn: 'Пропустил одну задачу — счётчик сбрасывается на день 1. В этом вся суть.',
+    btnStart: 'Начать день 1',
+    completedStamp: 'ВЫПОЛНЕНО',
+    completeTitle: 'Ты сделал это.<br />75 дней силы.',
+    completeSub: 'Дисциплина вместо мотивации. Ты построил нерушимую серию.',
+    btnAgain: 'Сделать снова',
+    dayLabel: 'ДЕНЬ',
+    todayTasks: 'Задачи на сегодня',
+    notesTitle: 'Заметки',
+    notesPlaceholder: 'Трудности, инсайты, прорывы — записывай мысли о дне.',
+    notesSaved: 'Сохраняется автоматически',
+    t1: 'Тренировка 45 минут',
+    t2: 'Уличная тренировка 45 минут',
+    t3: 'Фото прогресса',
+    t4: '10 страниц чтения',
+    t5: 'Выпить галлон воды',
+    t6: 'Соблюдать диету',
+    t7: 'Никаких читмилов или алкоголя',
+    addReminder: 'Напоминание',
+    cup: 'чашка',
+    off: 'ВЫКЛ',
+    gridTitle: 'Прогресс',
+    gridSub: 'Нажми на завершённый день, чтобы увидеть детали.',
+    statDone: 'дней сделано',
+    statCur: 'текущий день',
+    galleryTitle: 'Фото прогресса',
+    gallerySub: 'Твоя ежедневная трансформация, день за днём.',
+    galleryEmpty: 'Пока нет фото прогресса.<br/>Сделай ежедневное фото на вкладке «Сегодня».',
+    settingsTitle: 'Настройки',
+    languageLabel: 'Язык',
+    dayEndLabel: 'День заканчивается в',
+    dayEndHint: 'Задачи после этого времени засчитываются на следующий день.',
+    dayEnd0: '00:00 (полночь)',
+    dayEnd1: '01:00',
+    dayEnd2: '02:00',
+    dayEnd3: '03:00',
+    dayEnd4: '04:00',
+    remindersLabel: 'Напоминания',
+    remindersHint: 'Получай уведомления о ежедневных задачах.',
+    noReminders: 'Пока нет напоминаний. Добавь одно ниже.',
+    addReminderBtn: '+ Добавить напоминание',
+    motivationLabel: 'Мотивационные окна',
+    motivationHint: 'Показывать забавное видео или мотивирующую цитату после выполнения задачи.',
+    motivationSwitch: 'Включить мотивационные окна',
+    notifLabel: 'Уведомления',
+    allowNotif: 'Разрешить уведомления',
+    testNotif: 'Тестовое уведомление',
+    dangerLabel: 'Опасная зона',
+    clearCache: 'Очистить кэш и обновить',
+    resetDay1: 'Сброс к дню 1',
+    wipeData: 'Удалить все данные',
+    aboutText: 'Вдохновлено челленджем 75 Hard Энди Фриселлы. Строй дисциплину. Заработай свой день.',
+    dayEnds: 'День заканчивается:',
+    appVersion: 'Версия приложения:',
+    reminderTitle: 'Напоминание',
+    reminderFor: 'Напоминание: {task}',
+    fieldTask: 'Задача',
+    everyday: 'Каждый день',
+    fieldDays: 'Дни',
+    fieldTime: 'Время',
+    save: 'Сохранить',
+    deleteReminder: 'Удалить напоминание',
+    pickDay: 'Выбери хотя бы один день',
+    reminderSaved: 'Напоминание сохранено',
+    reminderDeleted: 'Напоминание удалено',
+    reminderOn: 'Напоминание включено',
+    reminderOff: 'Напоминание выключено',
+    noPhoto: 'Фото не сделано',
+    confirmResetTitle: 'Сбросить к дню 1?',
+    confirmResetText: 'Это начнёт новый 75-дневный забег. Все фото прогресса, заметки и отметки будут удалены. Без возврата.',
+    confirmWipeTitle: 'Удалить все данные?',
+    confirmWipeText: 'Удаляет челлендж и все данные на этом устройстве.',
+    cancel: 'Отмена',
+    yesReset: 'Да, сбросить',
+    yesDelete: 'Да, удалить',
+    share: 'Поделиться',
+    pvQuote: 'Научись справляться с дискомфортом — и перед тобой откроются все двери. Что может остановить тебя, если ты сам ищешь то, на что никто другой не готов?',
+    motivTitle: 'Отличная работа!',
+    keepGoing: 'Продолжай! \u{1F525}',
+    quotes: [
+      'Ты справишься. Продолжай!',
+      'Ещё одна задача готова. Держись.',
+      'Дисциплина — это делать всё равно. Отлично.',
+      'Маленькие шаги. Большие результаты. Продолжай.',
+      'Ты крепче, чем думаешь.',
+      'Твоё будущее «я» гордится тобой прямо сейчас.',
+      'Сегодня тебя ничто не остановит.',
+      'Заработано. Теперь бери следующую.',
+      'Постоянство сильнее интенсивности. Продолжай появляться.',
+      'Почти у цели. Не сбавляй темп.',
+      'Так поступают победители. Приходи снова.',
+      'Боль временна. Сдаться — навсегда.',
+    ],
+    weekdays: { 0: 'В', 1: 'П', 2: 'В', 3: 'С', 4: 'Ч', 5: 'П', 6: 'С' },
+    shareRules: [
+      'Две тренировки по 45 мин', 'Одна тренировка на улице', 'Соблюдать диету',
+      'Фото прогресса', 'Галлон воды', 'Без алкоголя и читмилов', 'Прочитать 10 страниц',
+    ],
+    tabToday: 'Сегодня', tabGrid: 'Сетка', tabPhotos: 'Фото', tabSettings: 'Настройки',
+    toastReset: 'Ты пропустил задачу — счётчик сброшен к дню 1.',
+    toastDay1: 'День 1 начинается сейчас. Без оправданий.',
+    toastRound2: 'Второй круг. День 1.',
+    toastDayComplete: 'День завершён — держись.',
+    toastPhotoSaved: 'Фото прогресса сохранено',
+    toastReminderSaved: 'Напоминание сохранено',
+    toastReminderDeleted: 'Напоминание удалено',
+    toastReminderOn: 'Напоминание включено',
+    toastReminderOff: 'Напоминание выключено',
+    toastPickDay: 'Выбери хотя бы один день',
+    toastNotifUnsupported: 'Уведомления не поддерживаются',
+    toastNotifBlocked: 'Уведомления заблокированы в настройках браузера',
+    toastNotifOff: 'Уведомления выключены',
+    toastMotivOn: 'Мотивационные окна включены',
+    toastMotivOff: 'Мотивационные окна выключены',
+    toastClearing: 'Очистка кэша...',
+    toastUpdated: 'Обновлено — обновляю...',
+    toastResetTo1: 'Сброшено к дню 1.',
+    toastWiped: 'Все данные удалены',
+    toastDayEnd: 'Время окончания дня обновлено',
+    toastShare: 'Карточка успеха скачана',
+    toastLang: 'Язык изменён',
+    notifTitle: '75 HARD — напоминание',
+    notifBody: '{task} — {time}. Оставайся дисциплинированным.',
+    notifTestTitle: '75 HARD',
+    notifTestBody: 'Уведомления работают. Держись.',
+    dayWord: 'ДЕНЬ',
+  },
+};
+
+function lang() { return I18N[state.lang] ? state.lang : 'en'; }
+function t(key, vars) {
+  const dict = I18N[lang()];
+  let s = dict[key] !== undefined ? dict[key] : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+  if (vars) { for (const k in vars) s = String(s).split('{' + k + '}').join(vars[k]); }
+  return s;
+}
+
+/** Applies the active language: dir/lang attributes, static texts and dynamic views. */
+function applyLanguage() {
+  const l = lang();
+  document.documentElement.lang = l;
+  document.documentElement.dir = l === 'he' ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  const sel = document.getElementById('set-day-end');
+  if (sel) { [...sel.options].forEach(o => { o.textContent = t('dayEnd' + o.value); }); }
+  const wd = I18N[l].weekdays;
+  document.querySelectorAll('#rm-week button').forEach(b => { b.textContent = wd[b.dataset.d] || b.textContent; });
+  if (state.startDate) { renderToday(); renderGrid(); renderGallery(); renderSettings(); }
+}
 const MOTIV_VIDEOS = [
   'videos/motivation-1.mp4',
   'videos/motivation-2.mp4',
@@ -37,13 +455,13 @@ const MOTIV_VIDEOS = [
 ];
 
 const TASKS = [
-  { id: 'workout1', label: '45 Minute Workout',        icon: 'dumbbell' },
-  { id: 'workout2', label: '45 Minute Outdoor Workout', icon: 'mountain' },
-  { id: 'photo',    label: 'Take Progress Picture',      icon: 'camera' },
-  { id: 'reading',  label: '10 Pages of Reading',        icon: 'book' },
-  { id: 'water',    label: 'Drink 1 Gallon of Water',    icon: 'droplet', tracker: true },
-  { id: 'diet',     label: 'Follow a Diet',              icon: 'salad' },
-  { id: 'nocheat',  label: 'No Cheat Meals or Alcohol',  icon: 'ban' },
+  { id: 'workout1', labelKey: 't1', icon: 'dumbbell' },
+  { id: 'workout2', labelKey: 't2', icon: 'mountain' },
+  { id: 'photo',    labelKey: 't3', icon: 'camera' },
+  { id: 'reading',  labelKey: 't4', icon: 'book' },
+  { id: 'water',    labelKey: 't5', icon: 'droplet', tracker: true },
+  { id: 'diet',     labelKey: 't6', icon: 'salad' },
+  { id: 'nocheat',  labelKey: 't7', icon: 'ban' },
 ];
 const taskById = Object.fromEntries(TASKS.map(t => [t.id, t]));
 
@@ -75,6 +493,7 @@ function defaultState() {
     reminders: [],
     notifAllowed: false,
     motivation: true,     // motivation popups on task completion
+    lang: 'en',           // 'en' | 'he' | 'ru'
   };
 }
 
@@ -149,7 +568,7 @@ function checkFailReset() {
     state.startDate = dateKey(effectiveToday());
     state.days = {};
     save();
-    toast('You missed a task \u2014 counter reset to Day 1.', true);
+    toast(t('toastReset'), true);
     vibrate([30, 40, 30]);
   }
 }
@@ -181,11 +600,11 @@ function renderToday() {
 
   // Tasks
   const list = document.getElementById('task-list');
-  list.innerHTML = TASKS.map(t => {
-    const doneTask = rec.tasks[t.id] === true;
-    const remind = state.reminders.find(r => r.taskId === t.id);
+  list.innerHTML = TASKS.map(tk => {
+    const doneTask = rec.tasks[tk.id] === true;
+    const remind = state.reminders.find(r => r.taskId === tk.id);
     let tracker = '';
-    if (t.tracker) {
+    if (tk.tracker) {
       const pct = Math.min(100, Math.round((rec.water / GALLON_ML) * 100));
       tracker = `
         <div class="water-track">
@@ -195,28 +614,28 @@ function renderToday() {
             <span>${pct}%</span>
           </div>
           <div class="water-actions">
-            <button class="water-btn" data-water="-${CUP_ML}" data-task="${t.id}">${ICONS.minus} &minus; cup</button>
-            <button class="water-btn" data-water="+${CUP_ML}" data-task="${t.id}">${ICONS.plus} + cup</button>
+            <button class="water-btn" data-water="-${CUP_ML}" data-task="${tk.id}">${ICONS.minus} ${t('cup')}</button>
+            <button class="water-btn" data-water="+${CUP_ML}" data-task="${tk.id}">${ICONS.plus} ${t('cup')}</button>
           </div>
         </div>`;
     }
     let cam = '';
     let thumb = '';
-    if (t.id === 'photo') {
+    if (tk.id === 'photo') {
       cam = `<button class="cam-btn" data-cam title="Open camera" aria-label="Take photo with camera">${ICONS.camera}</button>`;
     }
-    if (t.id === 'photo' && rec.photo) {
+    if (tk.id === 'photo' && rec.photo) {
       thumb = `<img class="photo-thumb" src="${rec.photo}" alt="Today's progress photo" />`;
     }
     return `
-      <div class="task ${doneTask ? 'done' : ''} ${t.tracker && waterOpen ? 'open' : ''}" data-task="${t.id}">
+      <div class="task ${doneTask ? 'done' : ''} ${tk.tracker && waterOpen ? 'open' : ''}" data-task="${tk.id}">
         <div class="check">${ICONS.check}</div>
-        <div class="task-icon">${ICONS[t.icon]}</div>
+        <div class="task-icon">${ICONS[tk.icon]}</div>
         <div class="task-main">
-          <div class="task-label">${t.label}</div>
+          <div class="task-label">${t(tk.labelKey)}</div>
           <div class="task-sub">
-            <button class="remind-btn" data-remind="${t.id}">
-              ${remind && remind.enabled ? `${ICONS.bell} ${formatTime(remind.time)}` : 'Add reminder'}
+            <button class="remind-btn" data-remind="${tk.id}">
+              ${remind && remind.enabled ? `${ICONS.bell} ${formatTime(remind.time)}` : t('addReminder')}
             </button>
           </div>
         </div>
@@ -261,14 +680,14 @@ function openDayDetail(dayNum) {
   dayDate.setDate(dayDate.getDate() + dayNum - 1);
   const key = dateKey(dayDate);
   const rec = state.days[key] || { tasks: {}, notes: '', photo: null };
-  document.getElementById('mday-day').textContent = `DAY ${dayNum} \u2014 ${key}`;
+  document.getElementById('mday-day').textContent = `${t('dayWord')} ${dayNum} \u2014 ${key}`;
   document.getElementById('mday-photo').innerHTML = rec.photo
     ? `<img src="${rec.photo}" alt="Progress photo" />`
-    : `<div class="no-photo">No photo taken</div>`;
-  document.getElementById('mday-tasks').innerHTML = TASKS.map(t =>
-    `<div class="mday-task ${rec.tasks[t.id] ? 'done' : ''}">
-       <div class="mday-check">${rec.tasks[t.id] ? ICONS.check : ''}</div>
-       <span>${t.label}</span>
+    : `<div class="no-photo">${t('noPhoto')}</div>`;
+  document.getElementById('mday-tasks').innerHTML = TASKS.map(tk =>
+    `<div class="mday-task ${rec.tasks[tk.id] ? 'done' : ''}">
+       <div class="mday-check">${rec.tasks[tk.id] ? ICONS.check : ''}</div>
+       <span>${t(tk.labelKey)}</span>
      </div>`).join('');
   document.getElementById('mday-notes').textContent = rec.notes || '';
   document.getElementById('mday-notes').style.display = rec.notes ? '' : 'none';
@@ -286,14 +705,14 @@ function renderGallery() {
       return { key, rec, dayNum };
     });
   if (!entries.length) {
-    el.innerHTML = `<div class="gallery-empty"><span class="big">\u{1F4F7}</span>No progress photos yet.<br/>Take your daily photo from the Today tab.</div>`;
+    el.innerHTML = `<div class="gallery-empty"><span class="big">\u{1F4F7}</span>${t('galleryEmpty')}</div>`;
     return;
   }
   el.innerHTML = entries.map(e =>
     `<button class="gcard" data-photo="${e.key}">
        <img src="${e.rec.photo}" alt="Day ${e.dayNum}" />
-       <div class="gcard-mini-stamp">COMPLETED</div>
-       <div class="gcard-overlay"><span class="gcard-day">DAY ${e.dayNum}</span></div>
+       <div class="gcard-mini-stamp">${t('completedStamp')}</div>
+       <div class="gcard-overlay"><span class="gcard-day">${t('dayWord')} ${e.dayNum}</span></div>
      </button>`).join('');
 }
 
@@ -305,22 +724,23 @@ function renderSettings() {
   document.getElementById('about-version').textContent = APP_VERSION;
   document.getElementById('switch-notif').checked = state.notifAllowed;
   document.getElementById('switch-motivation').checked = state.motivation !== false;
+  document.getElementById('set-lang').value = state.lang || 'en';
 
   const list = document.getElementById('reminder-list');
   list.innerHTML = state.reminders.length
     ? state.reminders.map(r => `
       <div class="r-item" data-rid="${r.id}">
         <div class="r-item-main">
-          <span class="r-item-label">${taskById[r.taskId] ? taskById[r.taskId].label : r.taskId}</span>
+          <span class="r-item-label">${taskById[r.taskId] ? t(taskById[r.taskId].labelKey) : r.taskId}</span>
           <span class="r-item-time">${r.enabled ? formatTime(r.time) : ''}</span>
         </div>
-        ${r.enabled ? '' : '<span class="r-item-off">OFF</span>'}
+        ${r.enabled ? '' : `<span class="r-item-off">${t('off')}</span>`}
         <label class="switch"><input type="checkbox" data-rtoggle="${r.id}" ${r.enabled ? 'checked' : ''}><span class="slider"></span></label>
       </div>`).join('')
-    : '<p class="set-hint" style="margin:0">No reminders yet. Add one below.</p>';
+    : `<p class="set-hint" style="margin:0">${t('noReminders')}</p>`;
 
   const sel = document.getElementById('rm-task');
-  sel.innerHTML = TASKS.map(t => `<option value="${t.id}">${t.label}</option>`).join('');
+  sel.innerHTML = TASKS.map(tk => `<option value="${tk.id}">${t(tk.labelKey)}</option>`).join('');
 }
 
 /* ---------------- Reminders ---------------- */
@@ -342,8 +762,8 @@ function openReminderModal(id, presetTaskId) {
   const taskId = r ? r.taskId : (presetTaskId || TASKS[0].id);
   document.getElementById('rm-id').value = r ? r.id : '';
   document.getElementById('rm-title').textContent = r
-    ? `Reminder: ${taskById[taskId].label}`
-    : 'Reminder';
+    ? t('reminderFor', { task: t(taskById[taskId].labelKey) })
+    : t('reminderTitle');
   document.getElementById('rm-task').value = taskId;
   document.getElementById('rm-everyday').checked = !r || r.days.length === 7;
   document.getElementById('rm-time').value = r ? r.time : '17:00';
@@ -369,14 +789,14 @@ function saveReminder() {
   const days = everyday
     ? [0, 1, 2, 3, 4, 5, 6]
     : [...document.querySelectorAll('#rm-week button.on')].map(b => Number(b.dataset.d));
-  if (!days.length) { toast('Pick at least one day', true); return; }
+  if (!days.length) { toast(t('toastPickDay'), true); return; }
   if (id) {
     const r = state.reminders.find(x => x.id === id);
     Object.assign(r, { taskId, time, days, enabled: r.enabled });
   } else {
     state.reminders.push({ id: 'r' + Date.now(), taskId, time, days, enabled: true });
   }
-  save(); renderSettings(); closeModal('modal-reminder'); toast('Reminder saved');
+  save(); renderSettings(); closeModal('modal-reminder'); toast(t('toastReminderSaved'));
 }
 
 function checkReminders() {
@@ -391,8 +811,11 @@ function checkReminders() {
     if (lastFired[key]) return;
     lastFired[key] = true;
     try {
-      new Notification('75 HARD \u2014 Reminder', {
-        body: `${taskById[r.taskId] ? taskById[r.taskId].label : ''} \u2014 ${formatTime(r.time)}. Stay disciplined.`,
+      new Notification(t('notifTitle'), {
+        body: t('notifBody', {
+          task: taskById[r.taskId] ? t(taskById[r.taskId].labelKey) : '',
+          time: formatTime(r.time),
+        }),
         icon: 'icons/icon-192.png',
         tag: key,
       });
@@ -422,7 +845,7 @@ function handlePhotoFile(file) {
     rec.photo = dataUrl;
     rec.tasks.photo = true;
     save(); renderToday(); renderGallery();
-    toast('Progress photo saved');
+    toast(t('toastPhotoSaved'));
     vibrate(15);
     showMotivation();
   });
@@ -463,7 +886,7 @@ function openPhotoViewer(key) {
   if (!rec || !rec.photo) return;
   document.getElementById('pv-img').src = rec.photo;
   const dayNum = Math.floor((parseDate(key) - parseDate(state.startDate)) / 86400000) + 1;
-  document.getElementById('pv-day').textContent = `DAY ${dayNum}`;
+  document.getElementById('pv-day').textContent = `${t('dayWord')} ${dayNum}`;
   document.getElementById('pv-img').dataset.day = dayNum;
   showModal('modal-photo');
 }
@@ -509,25 +932,22 @@ async function sharePhoto() {
   ctx.lineWidth = 10;
   ctx.font = '900 120px Arial';
   ctx.textAlign = 'center';
-  ctx.strokeText('COMPLETED', 0, 0);
+  ctx.strokeText(t('completedStamp'), 0, 0);
   ctx.fillStyle = '#ef4444';
-  ctx.fillText('COMPLETED', 0, 0);
+  ctx.fillText(t('completedStamp'), 0, 0);
   ctx.restore();
 
   // DAY x
   ctx.fillStyle = '#fff';
   ctx.font = '900 150px Arial';
   ctx.textAlign = 'left';
-  ctx.fillText(`DAY ${dayNum}`, 60, PH - 60);
+  ctx.fillText(`${t('dayWord')} ${dayNum}`, 60, PH - 60);
 
   // Rules list
   ctx.fillStyle = '#d4d4d8';
   ctx.font = '600 34px Arial';
   ctx.textBaseline = 'middle';
-  const rules = [
-    'Two 45 min workouts', 'One workout must be outdoors', 'Follow a diet',
-    'Take a progress pic', '1 gallon of water', 'No alcohol or cheat meals', 'Read 10 pages',
-  ];
+  const rules = t('shareRules');
   let y = PH + 90;
   rules.forEach(r => {
     ctx.fillStyle = '#ef4444';
@@ -552,7 +972,7 @@ async function sharePhoto() {
   const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
 
   // Try native share with the file; fall back to download.
-  const shareData = { title: `75 HARD \u2014 Day ${dayNum}`, files: [new File([blob], `75-hard-day-${dayNum}.png`, { type: 'image/png' })] };
+  const shareData = { title: `75 HARD \u2014 ${t('dayWord')} ${dayNum}`, files: [new File([blob], `75-hard-day-${dayNum}.png`, { type: 'image/png' })] };
   if (navigator.canShare && navigator.canShare(shareData)) {
     try { await navigator.share(shareData); return; } catch (e) { /* cancelled or unsupported */ }
   }
@@ -562,7 +982,7 @@ async function sharePhoto() {
   a.download = `75-hard-day-${dayNum}.png`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
-  toast('Success card downloaded');
+  toast(t('toastShare'));
 }
 
 /* ---------------- Modal helpers ---------------- */
@@ -573,7 +993,7 @@ function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 function celebrate() {
   const burst = document.createElement('div');
   burst.id = 'burst';
-  burst.innerHTML = '<div class="stamp">COMPLETED</div>';
+  burst.innerHTML = `<div class="stamp">${t('completedStamp')}</div>`;
   document.body.appendChild(burst);
   requestAnimationFrame(() => burst.classList.add('show'));
   vibrate([20, 30, 20, 30, 60]);
@@ -619,7 +1039,8 @@ function showMotivation() {
       if (!muted) tryPlay();
     });
   } else {
-    const q = MOTIV_QUOTES[Math.floor(Math.random() * MOTIV_QUOTES.length)];
+    const quotes = I18N[lang()].quotes;
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
     body.innerHTML = `<div class="motiv-quote"><span class="motiv-quote-mark">\u201C</span> ${q} <span class="motiv-quote-mark">\u201D</span></div>`;
   }
   showModal('modal-motivation');
@@ -640,6 +1061,7 @@ function switchView(view) {
 function init() {
   checkFailReset();
   registerSW();
+  applyLanguage();
 
   const hasStarted = !!state.startDate;
   document.getElementById('welcome').classList.toggle('hidden', hasStarted);
@@ -659,7 +1081,7 @@ function init() {
     document.getElementById('welcome').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     renderToday(); renderGrid(); renderGallery(); renderSettings();
-    toast('Day 1 starts now. No excuses.');
+    toast(t('toastDay1'));
     if (Notification.permission === 'default') Notification.requestPermission();
   });
 
@@ -669,7 +1091,7 @@ function init() {
     document.getElementById('complete').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     renderToday(); renderGrid(); renderGallery(); renderSettings();
-    toast('Round two. Day 1.');
+    toast(t('toastRound2'));
   });
 
   // --- Tab bar ---
@@ -734,7 +1156,7 @@ function init() {
       rec.completedAt = Date.now();
       save();
       celebrate();
-      toast('Day complete \u2014 stay hard.', true);
+      toast(t('toastDayComplete'), true);
     }
   });
 
@@ -769,7 +1191,7 @@ function init() {
   document.getElementById('set-day-end').addEventListener('change', e => {
     state.dayEndsHour = Number(e.target.value);
     save(); renderSettings();
-    toast('Day end updated');
+    toast(t('toastDayEnd'));
   });
 
   document.getElementById('btn-add-reminder').addEventListener('click', () => openReminderModal(null));
@@ -784,7 +1206,7 @@ function init() {
         r.enabled = toggle.checked;
         if (r.enabled && Notification.permission === 'default') Notification.requestPermission();
         save(); renderSettings();
-        toast(r.enabled ? 'Reminder on' : 'Reminder off');
+        toast(r.enabled ? t('toastReminderOn') : t('toastReminderOff'));
       }
       return;
     }
@@ -796,7 +1218,7 @@ function init() {
   document.getElementById('btn-del-reminder').addEventListener('click', () => {
     const id = document.getElementById('rm-id').value;
     state.reminders = state.reminders.filter(r => r.id !== id);
-    save(); renderSettings(); closeModal('modal-reminder'); toast('Reminder deleted');
+    save(); renderSettings(); closeModal('modal-reminder'); toast(t('toastReminderDeleted'));
   });
 
   // Weekday multi-select
@@ -814,15 +1236,15 @@ function init() {
   // Notifications master switch
   document.getElementById('switch-notif').addEventListener('change', async e => {
     if (e.target.checked) {
-      if (!('Notification' in window)) { toast('Notifications not supported', true); e.target.checked = false; return; }
+      if (!('Notification' in window)) { toast(t('toastNotifUnsupported'), true); e.target.checked = false; return; }
       const p = await Notification.requestPermission();
       state.notifAllowed = p === 'granted';
-      if (!state.notifAllowed) { toast('Notifications blocked in browser settings', true); e.target.checked = false; }
+      if (!state.notifAllowed) { toast(t('toastNotifBlocked'), true); e.target.checked = false; }
       save();
     } else {
       state.notifAllowed = false;
       save();
-      toast('Notifications off');
+      toast(t('toastNotifOff'));
     }
   });
 
@@ -830,17 +1252,25 @@ function init() {
   document.getElementById('switch-motivation').addEventListener('change', e => {
     state.motivation = e.target.checked;
     save();
-    toast(e.target.checked ? 'Motivation popups on' : 'Motivation popups off');
+    toast(e.target.checked ? t('toastMotivOn') : t('toastMotivOff'));
+  });
+
+  // Language switch
+  document.getElementById('set-lang').addEventListener('change', e => {
+    state.lang = e.target.value;
+    save();
+    applyLanguage();
+    toast(t('toastLang'));
   });
 
   document.getElementById('btn-test-notif').addEventListener('click', () => {
     if (Notification.permission === 'granted') {
-      new Notification('75 HARD', { body: 'Notifications are working. Stay hard.', icon: 'icons/icon-192.png' });
+      new Notification(t('notifTestTitle'), { body: t('notifTestBody'), icon: 'icons/icon-192.png' });
     } else {
       Notification.requestPermission().then(p => {
         if (p === 'granted') {
           state.notifAllowed = true; save(); renderSettings();
-          new Notification('75 HARD', { body: 'Notifications are working. Stay hard.', icon: 'icons/icon-192.png' });
+          new Notification(t('notifTestTitle'), { body: t('notifTestBody'), icon: 'icons/icon-192.png' });
         }
       });
     }
@@ -848,7 +1278,7 @@ function init() {
 
   // --- Danger zone ---
   document.getElementById('btn-clear-cache').addEventListener('click', async () => {
-    toast('Clearing cache...');
+    toast(t('toastClearing'));
     if ('serviceWorker' in navigator) {
       const regs = await navigator.serviceWorker.getRegistrations();
       await Promise.all(regs.map(r => r.unregister()));
@@ -861,17 +1291,17 @@ function init() {
   });
 
   document.getElementById('btn-reset').addEventListener('click', () => {
-    document.getElementById('confirm-title').textContent = 'Reset to Day 1?';
-    document.getElementById('confirm-text').textContent =
-      'This starts a fresh 75-day run. All progress photos, notes and check-ins will be wiped. There is no undo.';
+    document.getElementById('confirm-title').textContent = t('confirmResetTitle');
+    document.getElementById('confirm-text').textContent = t('confirmResetText');
+    document.getElementById('btn-confirm-yes').textContent = t('yesReset');
     document.getElementById('btn-confirm-yes').dataset.action = 'reset';
     showModal('modal-confirm');
   });
 
   document.getElementById('btn-wipe').addEventListener('click', () => {
-    document.getElementById('confirm-title').textContent = 'Delete all data?';
-    document.getElementById('confirm-text').textContent =
-      'Removes the challenge and every trace of data stored on this device.';
+    document.getElementById('confirm-title').textContent = t('confirmWipeTitle');
+    document.getElementById('confirm-text').textContent = t('confirmWipeText');
+    document.getElementById('btn-confirm-yes').textContent = t('yesDelete');
     document.getElementById('btn-confirm-yes').dataset.action = 'wipe';
     showModal('modal-confirm');
   });
@@ -881,12 +1311,12 @@ function init() {
     closeModal('modal-confirm');
     if (action === 'reset') {
       startChallenge();
-      toast('Reset to Day 1.', true);
+      toast(t('toastResetTo1'), true);
       vibrate([30, 40, 30]);
     } else {
       state = defaultState();
       save();
-      toast('All data deleted');
+      toast(t('toastWiped'));
     }
     document.getElementById('app').classList.add('hidden');
     document.getElementById('complete').classList.add('hidden');
@@ -931,7 +1361,7 @@ function registerSW() {
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (updated) return;
       updated = true;
-      toast('Updated \u2014 refreshing...');
+      toast(t('toastUpdated'));
       setTimeout(() => window.location.reload(), 400);
     });
   }
