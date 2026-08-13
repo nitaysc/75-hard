@@ -82,6 +82,10 @@ button { font-family: inherit; border: none; background: none; color: inherit; c
 }
 .brand-badge.big { font-size: 15px; padding: 9px 16px; border-radius: 12px; }
 
+/* ---------- Brand logo (replaces the 75 HARD text badge) ---------- */
+.brand-logo { height: 32px; width: auto; display: block; }
+.brand-logo.big { height: 72px; }
+
 /* ---------- Welcome ---------- */
 .screen { min-height: 100vh; min-height: 100dvh; padding: calc(var(--safe-top) + 30px) 22px calc(var(--safe-bottom) + 30px); display: flex; align-items: center; justify-content: center; }
 .welcome-inner { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 18px; }

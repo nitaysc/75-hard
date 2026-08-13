@@ -6,7 +6,7 @@
 
 /* ---------------- Constants ---------------- */
 const STORAGE_KEY = 'seventyfivehard.v1';
-const APP_VERSION = '10';
+const APP_VERSION = '13';
 const DAYS_TOTAL = 75;
 const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
@@ -891,6 +891,20 @@ function openPhotoViewer(key) {
   showModal('modal-photo');
 }
 
+/* Loads the app logo (SVG) once, for drawing on the share card. */
+let logoImgPromise = null;
+function getLogoImage() {
+  if (!logoImgPromise) {
+    logoImgPromise = new Promise(resolve => {
+      const im = new Image();
+      im.onload = () => resolve(im);
+      im.onerror = () => resolve(null);
+      im.src = 'logo.svg';
+    });
+  }
+  return logoImgPromise;
+}
+
 /** Draws a shareable success card to a canvas and shares/downloads it. */
 async function sharePhoto() {
   const img = document.getElementById('pv-img');
@@ -957,14 +971,18 @@ async function sharePhoto() {
     y += 62;
   });
 
-  // Footer badge
+  // Footer badge (logo on the left, site name on the right)
   ctx.fillStyle = '#dc2626';
   ctx.fillRect(0, H - 170, W, 170);
-  ctx.fillStyle = '#fff';
-  ctx.font = '900 56px Arial';
-  ctx.textAlign = 'left';
-  ctx.fillText('75 HARD', 56, H - 85);
+
+  const logo = await getLogoImage();
+  if (logo) {
+    const lh = 104;
+    const lw = (logo.width * lh) / logo.height;
+    ctx.drawImage(logo, 44, H - 170 + (170 - lh) / 2, lw, lh);
+  }
   ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
   ctx.font = '600 30px Arial';
   ctx.fillStyle = '#fecaca';
   ctx.fillText('75HARD.COM', W - 56, H - 85);

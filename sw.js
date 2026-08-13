@@ -1,10 +1,11 @@
 /* 75 HARD service worker — offline caching */
-const CACHE = '75hard-v12';
+const CACHE = '75hard-v14';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=11',
-  './app.js?v=11',
+  './styles.css?v=13',
+  './app.js?v=13',
+  './logo.svg',
   './manifest.webmanifest',
   './icons/icon-192.png',
   './icons/icon-512.png',
