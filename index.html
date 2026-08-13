@@ -140,6 +140,15 @@
         </div>
 
         <div class="set-group">
+          <div class="set-label">Motivation popups</div>
+          <p class="set-hint">Show a fun video or a motivational quote whenever you complete a task.</p>
+          <div class="switch-row">
+            <span>Enable motivation popups</span>
+            <label class="switch"><input type="checkbox" id="switch-motivation"><span class="slider"></span></label>
+          </div>
+        </div>
+
+        <div class="set-group">
           <div class="set-label">Notifications</div>
           <div class="switch-row">
             <span>Allow notifications</span>
@@ -261,6 +270,19 @@
         <div class="pv-day" id="pv-day">DAY 15</div>
         <div class="pv-quote">Learn how to deal with discomfort and it opens the door to everything.</div>
       </div>
+    </div>
+  </div>
+
+  <!-- Motivation popup (random video or quote when a task is completed) -->
+  <div id="modal-motivation" class="modal-backdrop hidden">
+    <div class="modal-sheet motivation">
+      <div class="modal-grab"></div>
+      <div class="modal-head">
+        <span class="modal-title" id="motiv-title">Nice work!</span>
+        <button class="icon-btn close" data-close="modal-motivation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div id="motiv-body" class="motiv-body"></div>
+      <button class="btn btn-primary btn-block" id="btn-motiv-close">Keep going &#x1F525;</button>
     </div>
   </div>
 

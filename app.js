@@ -11,6 +11,30 @@ const GALLON_ML = 3785;   // 1 US gallon
 const CUP_ML = 250;       // standard cup
 const QUOTE = 'Learn how to deal with discomfort and it opens the door to everything. What can stop you if you willingly seek out all the things nobody else is willing to do?';
 
+/* Random motivation shown on task completion */
+const MOTIV_QUOTES = [
+  'You got this. Keep going!',
+  'One more task down. Stay hard.',
+  'Discipline is doing it anyway. Nice.',
+  'Small steps. Big results. Keep pushing.',
+  'You are tougher than you think.',
+  'Future you is proud of you right now.',
+  'Nothing can stop you today.',
+  'Earned it. Now go get the next one.',
+  'Consistency beats intensity. Keep showing up.',
+  'Almost there. Do not slow down.',
+  'That is what winners do. Show up again.',
+  'Pain is temporary. Quitting is forever.',
+];
+const MOTIV_VIDEOS = [
+  'videos/motivation-1.mp4',
+  'videos/motivation-2.mp4',
+  'videos/motivation-3.mp4',
+  'videos/motivation-4.mp4',
+  'videos/motivation-5.mp4',
+  'videos/motivation-6.mp4',
+];
+
 const TASKS = [
   { id: 'workout1', label: '45 Minute Workout',        icon: 'dumbbell' },
   { id: 'workout2', label: '45 Minute Outdoor Workout', icon: 'mountain' },
@@ -49,6 +73,7 @@ function defaultState() {
     days: {},             // 'YYYY-MM-DD' -> { tasks, water, notes, photo, completedAt }
     reminders: [],
     notifAllowed: false,
+    motivation: true,     // motivation popups on task completion
   };
 }
 
@@ -277,6 +302,7 @@ function renderSettings() {
   document.getElementById('about-day-end').textContent =
     `${formatHour(state.dayEndsHour)} ${state.dayEndsHour >= 12 ? 'PM' : 'AM'}`;
   document.getElementById('switch-notif').checked = state.notifAllowed;
+  document.getElementById('switch-motivation').checked = state.motivation !== false;
 
   const list = document.getElementById('reminder-list');
   list.innerHTML = state.reminders.length
@@ -396,6 +422,7 @@ function handlePhotoFile(file) {
     save(); renderToday(); renderGallery();
     toast('Progress photo saved');
     vibrate(15);
+    showMotivation();
   });
 }
 
@@ -551,6 +578,40 @@ function celebrate() {
   setTimeout(() => { burst.classList.remove('show'); setTimeout(() => burst.remove(), 300); }, 1400);
 }
 
+/* ---------------- Motivation popup ---------------- */
+const MUTE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
+const UNMUTE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
+
+/** Shows a random motivation video or quote in a half-screen sheet. */
+function showMotivation() {
+  if (state.motivation === false) return;
+  const body = document.getElementById('motiv-body');
+  const showVideo = Math.random() < 0.6;
+
+  if (showVideo) {
+    const src = MOTIV_VIDEOS[Math.floor(Math.random() * MOTIV_VIDEOS.length)];
+    body.innerHTML = `
+      <div class="motiv-video-frame">
+        <video id="motiv-video" src="${src}" autoplay muted loop playsinline preload="metadata"></video>
+        <button class="motiv-mute" id="btn-motiv-mute" aria-label="Toggle sound">${MUTE_ICON}</button>
+      </div>`;
+    const v = document.getElementById('motiv-video');
+    v.play().catch(() => {});
+    const muteBtn = document.getElementById('btn-motiv-mute');
+    let muted = true;
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      v.muted = muted;
+      muteBtn.innerHTML = muted ? MUTE_ICON : UNMUTE_ICON;
+      if (!muted) v.play().catch(() => {});
+    });
+  } else {
+    const q = MOTIV_QUOTES[Math.floor(Math.random() * MOTIV_QUOTES.length)];
+    body.innerHTML = `<div class="motiv-quote"><span class="motiv-quote-mark">\u201C</span> ${q} <span class="motiv-quote-mark">\u201D</span></div>`;
+  }
+  showModal('modal-motivation');
+}
+
 /* ---------------- View switching (tab bar) ---------------- */
 const VIEWS = ['today', 'grid', 'gallery', 'settings'];
 function switchView(view) {
@@ -623,11 +684,12 @@ function init() {
     if (waterBtn) {
       const rec = dayRecord();
       const delta = Number(waterBtn.dataset.water);
+      const wasFull = rec.water >= GALLON_ML;
       rec.water = Math.max(0, Math.min(GALLON_ML, rec.water + delta));
-      if (rec.water >= GALLON_ML) rec.tasks.water = true;
-      if (rec.water < GALLON_ML) rec.tasks.water = false;
+      rec.tasks.water = rec.water >= GALLON_ML;
       vibrate(10);
       save(); renderToday();
+      if (rec.tasks.water && !wasFull) showMotivation();
       if (isDayComplete(rec) && !rec.completedAt) { rec.completedAt = Date.now(); save(); celebrate(); }
       return;
     }
@@ -651,8 +713,10 @@ function init() {
     }
 
     rec.tasks[id] = !rec.tasks[id];
-    vibrate(rec.tasks[id] ? 12 : 8);
+    const nowDone = rec.tasks[id] === true;
+    vibrate(nowDone ? 12 : 8);
     save(); renderToday();
+    if (nowDone) showMotivation();
     if (isDayComplete(rec) && !rec.completedAt) {
       rec.completedAt = Date.now();
       save();
@@ -749,6 +813,13 @@ function init() {
     }
   });
 
+  // Motivation popups switch
+  document.getElementById('switch-motivation').addEventListener('change', e => {
+    state.motivation = e.target.checked;
+    save();
+    toast(e.target.checked ? 'Motivation popups on' : 'Motivation popups off');
+  });
+
   document.getElementById('btn-test-notif').addEventListener('click', () => {
     if (Notification.permission === 'granted') {
       new Notification('75 HARD', { body: 'Notifications are working. Stay hard.', icon: 'icons/icon-192.png' });
@@ -804,6 +875,13 @@ function init() {
     m.addEventListener('click', e => {
       if (e.target === m && !m.classList.contains('full')) m.classList.add('hidden');
     }));
+
+  // --- Motivation popup: pause the video whenever the sheet closes ---
+  const motivModal = document.getElementById('modal-motivation');
+  const stopMotivVideo = () => { const v = document.getElementById('motiv-video'); if (v) v.pause(); };
+  document.getElementById('btn-motiv-close').addEventListener('click', () => closeModal('modal-motivation'));
+  new MutationObserver(() => { if (motivModal.classList.contains('hidden')) stopMotivVideo(); })
+    .observe(motivModal, { attributes: true, attributeFilter: ['class'] });
 
   // --- Reminder watcher (every 20s) ---
   setInterval(checkReminders, 20000);
