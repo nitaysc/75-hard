@@ -592,18 +592,29 @@ function showMotivation() {
     const src = MOTIV_VIDEOS[Math.floor(Math.random() * MOTIV_VIDEOS.length)];
     body.innerHTML = `
       <div class="motiv-video-frame">
-        <video id="motiv-video" src="${src}" autoplay muted loop playsinline preload="metadata"></video>
-        <button class="motiv-mute" id="btn-motiv-mute" aria-label="Toggle sound">${MUTE_ICON}</button>
+        <video id="motiv-video" src="${src}" autoplay loop playsinline preload="metadata"></video>
+        <button class="motiv-mute" id="btn-motiv-mute" aria-label="Toggle sound">${UNMUTE_ICON}</button>
       </div>`;
     const v = document.getElementById('motiv-video');
-    v.play().catch(() => {});
     const muteBtn = document.getElementById('btn-motiv-mute');
-    let muted = true;
+    let muted = false;
+    // Sound starts ON. If the browser blocks autoplay-with-sound, fall back to muted.
+    const tryPlay = () => v.play().then(() => {
+      muted = false;
+      v.muted = false;
+      muteBtn.innerHTML = UNMUTE_ICON;
+    }).catch(() => {
+      muted = true;
+      v.muted = true;
+      muteBtn.innerHTML = MUTE_ICON;
+      v.play().catch(() => {});
+    });
+    tryPlay();
     muteBtn.addEventListener('click', () => {
       muted = !muted;
       v.muted = muted;
       muteBtn.innerHTML = muted ? MUTE_ICON : UNMUTE_ICON;
-      if (!muted) v.play().catch(() => {});
+      if (!muted) tryPlay();
     });
   } else {
     const q = MOTIV_QUOTES[Math.floor(Math.random() * MOTIV_QUOTES.length)];
