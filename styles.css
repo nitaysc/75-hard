@@ -25,6 +25,14 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+/* Hide scrollbars everywhere so the app doesn't read as a web page */
+html, body, main, .view, .modal-sheet {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar, main::-webkit-scrollbar,
+.view::-webkit-scrollbar, .modal-sheet::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
 html, body {
   background: var(--bg);
   color: var(--text);
@@ -213,13 +221,13 @@ main { flex: 1; padding: 18px 18px 0; overflow-y: auto; }
 .cam-btn:active { transform: scale(0.9); background: var(--red-bright); }
 
 /* ---------- Notes ---------- */
-.notes-card { background: #fff; border-radius: var(--radius); padding: 16px; }
+.notes-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
 .notes-card textarea {
   width: 100%; background: transparent; border: none; outline: none; resize: none;
-  color: #111; font-family: inherit; font-size: 15px; line-height: 1.5; min-height: 110px;
+  color: var(--text); font-family: inherit; font-size: 15px; line-height: 1.5; min-height: 110px;
 }
-.notes-card textarea::placeholder { color: #9ca3af; }
-.notes-foot { font-size: 11.5px; color: #9ca3af; padding-top: 8px; border-top: 1px solid #e5e7eb; }
+.notes-card textarea::placeholder { color: var(--text-faint); }
+.notes-foot { font-size: 11.5px; color: var(--text-faint); padding-top: 8px; border-top: 1px solid var(--border); }
 
 /* ---------- Bottom tab bar ---------- */
 .tabbar {
@@ -380,7 +388,8 @@ main { flex: 1; padding: 18px 18px 0; overflow-y: auto; }
 .mday-check svg { width: 11px; height: 11px; color: #fff; }
 .mday-task.done .mday-check { background: var(--red); border-color: var(--red); }
 .mday-notes {
-  background: #fff; color: #111; border-radius: var(--radius); padding: 14px; font-size: 14px; line-height: 1.55; white-space: pre-wrap;
+  background: var(--card); color: var(--text); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; font-size: 14px; line-height: 1.55; white-space: pre-wrap;
 }
 .mday-notes:empty { display: none; }
 

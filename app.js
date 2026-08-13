@@ -12,12 +12,13 @@ const CUP_ML = 250;       // standard cup
 const QUOTE = 'Learn how to deal with discomfort and it opens the door to everything. What can stop you if you willingly seek out all the things nobody else is willing to do?';
 
 const TASKS = [
-  { id: 'workout1', label: 'First Workout',      sub: '45 minutes',             icon: 'dumbbell' },
-  { id: 'workout2', label: 'Second Workout',     sub: '45 minutes \u2022 outdoors', icon: 'mountain' },
-  { id: 'photo',    label: 'Take Progress Picture', sub: 'Daily transformation photo', icon: 'camera' },
-  { id: 'reading',  label: '10 Pages of Reading',  sub: 'Non-fiction book',      icon: 'book' },
-  { id: 'water',    label: 'Drink 1 Gallon of Water', sub: '3.8 liters \u2022 track intake', icon: 'droplet', tracker: true },
-  { id: 'diet',     label: 'Follow a Diet',       sub: 'No cheat meals or alcohol', icon: 'salad' },
+  { id: 'workout1', label: '45 Minute Workout',        icon: 'dumbbell' },
+  { id: 'workout2', label: '45 Minute Outdoor Workout', icon: 'mountain' },
+  { id: 'photo',    label: 'Take Progress Picture',      icon: 'camera' },
+  { id: 'reading',  label: '10 Pages of Reading',        icon: 'book' },
+  { id: 'water',    label: 'Drink 1 Gallon of Water',    icon: 'droplet', tracker: true },
+  { id: 'diet',     label: 'Follow a Diet',              icon: 'salad' },
+  { id: 'nocheat',  label: 'No Cheat Meals or Alcohol',  icon: 'ban' },
 ];
 const taskById = Object.fromEntries(TASKS.map(t => [t.id, t]));
 
@@ -31,6 +32,7 @@ const ICONS = {
   book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
   droplet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7 6.5 8.2a7 7 0 1 0 11 0L12 2.7z"/></svg>',
   salad: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9z"/><path d="M11.4 3.6a3 3 0 0 1 4.2 4.2"/><path d="M7.5 6.5a2.5 2.5 0 0 1 5 0"/></svg>',
+  ban: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/></svg>',
 };
